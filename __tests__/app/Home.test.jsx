@@ -5,7 +5,7 @@ describe('Home page', () => {
   it('renders the main tagline', () => {
     render(<Home />);
     expect(
-      screen.getByText(/dragon's purr crafts and sundry is a toronto-based creative duo that makes things/i)
+      screen.getByText(/Welcome to Dragon's Purr Crafts and Sundry. We're a Toronto-Based Creative Duo that makes things./i)
     ).toBeInTheDocument();
   });
 
