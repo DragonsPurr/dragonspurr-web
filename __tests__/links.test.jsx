@@ -3,8 +3,8 @@ import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
 import Home from '@/app/page';
 import About from '@/app/about/page';
-import Projects from '@/app/projects/page';
-import Collective from '@/app/collective/page';
+import Projects from '@/app/brands/page';
+import Collective from '@/app/portfolio/page';
 import Contact from '@/app/contact/page';
 import NotFound from '@/app/not-found';
 

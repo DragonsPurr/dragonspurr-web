@@ -1,6 +1,6 @@
-# Boxing Octopus Creative Main Website
+# Dragon's Purr Crafts and Sundry Main Website
 
-This is the main website for [Boxing Octopus Creative](https://boxingoctop.us/). It is built using [React](https://reactjs.org/) and compiled to static HTML using react-scripts.
+This is the main website for [Dragon's Purr Crafts and Sundry](https://dragonspurr.ca/). It is built using [NextJS](https://nextjs.org/) and compiled to static HTML using Webpack.
 
 ## Development
 
@@ -8,7 +8,7 @@ To run the site locally, clone the repo and run `npm install` to install the dep
 
 ## Deployment
 
-The site is deployed to [DigitalOcean's App Platform](https://www.digitalocean.com/products/app-platform/) using a GitHub App. Pushing to the `main` branch will trigger a new deployment.
+The site is deployed to [Vercel](https://www.digitalocean.com/products/app-platform/) using a GitHub App. Pushing to the `main` branch will trigger a new deployment.
 
 ## License
 

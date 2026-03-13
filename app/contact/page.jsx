@@ -3,6 +3,7 @@
 import { useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import Swal from 'sweetalert2';
+import { commonClasses, socialMedia, siteInfo } from "@/app/lib/constants";
 
 const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
 const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
@@ -41,30 +42,30 @@ export default function Contact() {
 
   return (
     <div className="container mx-auto">
-      <div className="font-bebas text-[90px] leading-none mb-12">Contact</div>
+      <div className={commonClasses.pageHeader}><strong>Contact</strong></div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="font-bebas text-2xl">
+        <div className={commonClasses.bodyText}>
           <p>
-            If you have any questions, comments, or concerns, please feel free to reach out to me on social media.
+            If you have any questions, comments, or concerns, please feel free to reach out to us on social media.
             <br />
-            <a href="https://bsky.app/profile/boxingoctopus.social" target="_blank" rel="noreferrer">
+            <a href={socialMedia.bluesky} target="_blank" rel="noreferrer">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Bluesky_Logo.svg"
-                alt="Ryan Draga on Bluesky"
+                alt={`${siteInfo.name} on Bluesky`}
                 className="w-[5%] min-w-[32px] inline mr-5 grayscale contrast-200 brightness-200"
               />
             </a>
-            <a href="https://www.linkedin.com/in/ryandraga" target="_blank" rel="noreferrer">
+            <a href={socialMedia.linkedin} target="_blank" rel="noreferrer">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg"
-                alt="Ryan Draga on LinkedIn"
+                alt={`${siteInfo.name} on LinkedIn`}
                 className="w-[5%] min-w-[32px] inline mr-5 grayscale contrast-200 invert"
               />
             </a>
-            <a href="https://hey.cafe/@boxingoctopus" target="_blank" rel="noreferrer">
+            <a href={socialMedia.heycafe} target="_blank" rel="noreferrer">
               <img
                 src="https://assets.heycafecdn.com/logos/svg/logo_round_transparent_purple.svg?cache=wqn4mia5vlfugr4"
-                alt="Ryan Draga on Hey.Café"
+                alt={`${siteInfo.name} on Hey.Café`}
                 className="w-[5%] min-w-[32px] inline mr-5 grayscale contrast-200 invert"
               />
             </a>
@@ -74,46 +75,41 @@ export default function Contact() {
         </div>
         <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="from_email" className="block font-bebas text-xl mb-1">
-              Email address
+            <label htmlFor="from_email" className={commonClasses.formLabel}>
+              <strong>Email address</strong>
             </label>
             <input
               id="from_email"
               type="email"
               name="from_email"
               placeholder="Enter email"
-              className="w-full font-bebas text-lg px-3 py-2 rounded-none border border-gray-600 bg-black text-white"
+              className={commonClasses.formInput}
             />
           </div>
           <div>
-            <label htmlFor="from_name" className="block font-bebas text-xl mb-1">
-              Your Name
+            <label htmlFor="from_name" className={commonClasses.formLabel}>
+              <strong>Your Name</strong>
             </label>
             <input
               id="from_name"
               type="text"
               name="from_name"
               placeholder="Your Name"
-              className="w-full font-bebas text-lg px-3 py-2 rounded-none border border-gray-600 bg-black text-white"
+              className={commonClasses.formInput}
             />
           </div>
           <div>
-            <label htmlFor="message" className="block font-bebas text-xl mb-1">
-              Message
+            <label htmlFor="message" className={commonClasses.formLabel}>
+              <strong>Message</strong>
             </label>
             <textarea
               id="message"
               name="message"
               rows={6}
-              className="w-full font-bebas text-lg px-3 py-2 rounded-none border border-gray-600 bg-black text-white resize-y"
+              className={commonClasses.formInput}
             />
           </div>
-          <button
-            type="submit"
-            className="font-bebas text-lg px-4 py-2 rounded-none bg-gray-600 text-white hover:bg-gray-500"
-          >
-            Submit
-          </button>
+          <button type="submit" className={commonClasses.formButton}>Submit</button>
         </form>
       </div>
     </div>

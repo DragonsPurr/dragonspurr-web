@@ -2,20 +2,21 @@ import { Analytics } from './Analytics';
 import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
 import './globals.css';
+import { logoTypes, siteInfo, commonClasses } from './lib/constants';
 
 export const viewport = {
   themeColor: '#000000',
 };
 
 export const metadata = {
-  title: 'Boxing Octopus Creative',
-  description: 'Boxing Octopus Creative is a Toronto-Based Digital Content Brand With Many Tentacles',
+  title: siteInfo.name,
+  description: siteInfo.description,
   openGraph: {
-    url: 'https://boxingoctop.us',
+    url: siteInfo.url,
   },
   icons: {
-    icon: 'https://assets.boxingoctop.us/Logo%20White.png',
-    apple: 'https://assets.boxingoctop.us/Logo%20White.png',
+    icon: logoTypes.square_for_dark_bkgds,
+    apple: logoTypes.square_for_dark_bkgds,
   },
 };
 
@@ -42,8 +43,8 @@ export default function RootLayout({ children }) {
       <body className="bg-black text-white min-h-screen flex flex-col">
         <Analytics />
         <Navigation />
-        <main className="flex-1 flex justify-center items-center mt-[100px] px-4 pb-24">
-          <div className="w-full max-w-7xl mx-auto">
+        <main className={commonClasses.mainContent}>
+          <div className="w-full max-w-7xl mx-auto ">
             {children}
           </div>
         </main>

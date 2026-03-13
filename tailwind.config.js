@@ -7,7 +7,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        bebas: ['"Bebas Neue"', 'sans-serif'],
+        cinzel_decorative: ['"Cinzel Decorative"', 'serif'],
+        cormorant_garamond: ['"Cormorant Garamond"', 'serif'],
+        cinzel: ['"Cinzel"', 'serif'],
       },
     },
   },

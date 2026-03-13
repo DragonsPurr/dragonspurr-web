@@ -1,22 +1,24 @@
+import { commonClasses, asset_base_url } from "@/app/lib/constants";
 export default function About() {
   return (
     <div className="container mx-auto">
-      <div className="font-bebas text-[90px] leading-none mb-12">About</div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-        <div className="flex justify-center items-center">
-          <img
-            src="https://assets.boxingoctop.us/img/ryan-square.jpg"
-            alt="Ryan"
-            className="w-[400px] h-auto rounded-full grayscale contrast-150"
-          />
+      <div className={commonClasses.pageHeader}><strong>About Us</strong></div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+        <div className="flex justify-start items-start">
+          <img src={`${asset_base_url}/kayt-and-ryan.png`} alt="Kayt and Ryan" className={commonClasses.circularImage} />
         </div>
-        <div className="font-bebas text-2xl">
+        <div className={commonClasses.bodyText}>
           <p>
-            My Name is Ryan Draga. Owner and Founder of Boxing Octopus Creative; the Toronto-based digital content brand with many tentacles.
-            <br /><br />
-            I created this website (and the Boxing Octopus brand) to showcase my work both as a developer and graphic designer.
-            <br /><br />
-            With that said, I am also available for any freelance work. My information can be found on the Contact page.
+            <strong className={commonClasses.sectionHeader}>Who We Are</strong><br /><br />
+            Hi! We're Kayt and Ryan! Co-Founders of Dragon's Purr Crafts and Sundry! <br /><br />
+            We started Dragon's Purr for a bunch of different reasons, but chief among them was a desire to share our creativity with the world, and to make dorky little trinkets that folks like us would find funny, charming, and above all, inclusive; it's our hope that you'll find a bit of yourselves in our quirky designs.<br /><br />
+            Beyond that, we believe in helping out where we can, and championing causes close to our hearts, both through the art we make, and through direct support in the form of charitable donations which come from the sale of that same art.<br />
+          </p>
+        </div>
+        <div className={commonClasses.bodyText}>
+          <p>
+            <strong className={commonClasses.sectionHeader}>What We Make</strong><br /><br />
+            If you can slap vinyl on it, we can make it. From t-shirts to stickers, to mugs, keychains, and much more. Beyond the custom die-cut vinyl, we also offer small-scale custom engravings, and our own in-house designs on apparel courtesy of our sister brand, Hipster Donut Apparel. Check our portfolio page for some of our past work!<br /><br />
           </p>
         </div>
       </div>

@@ -1,6 +1,15 @@
 'use client';
 
 import Link from 'next/link';
+import { externalLinkAttributes, commonClasses, logoTypes } from "@/app/lib/constants";
+
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/brands", label: "Brands" },
+  { href: "/portfolio", label: "Portfolio" },
+  { href: "/contact", label: "Contact" },
+];
 
 export function Navigation() {
   return (
@@ -8,34 +17,20 @@ export function Navigation() {
       <div className="w-full max-w-7xl flex items-center justify-between">
         <Link href="/" className="flex items-center">
           <img
-            src="https://assets.boxingoctop.us/img/Logo%20White.png"
-            alt="Boxing Octopus"
-            className="w-20 h-auto"
+            src={logoTypes.wide_for_dark_bkgds}
+            alt="Dragon's Purr Crafts and Sundry"
+            className="w-60 h-auto"
           />
         </Link>
-        <div className="flex gap-4 font-bebas text-white text-4xl">
-          <Link href="/" className="text-white no-underline hover:opacity-80">
-            Home
-          </Link>
-          <Link href="/about" className="text-white no-underline hover:opacity-80">
-            About
-          </Link>
-          <Link href="/projects" className="text-white no-underline hover:opacity-80">
-            Projects
-          </Link>
-          <Link href="/collective" className="text-white no-underline hover:opacity-80">
-            Collective
-          </Link>
-          <Link href="/contact" className="text-white no-underline hover:opacity-80">
-            Contact
-          </Link>
-          <a
-            href="https://github.com/boxingoctopus"
-            target="_blank"
-            rel="noreferrer"
-            className="text-white no-underline hover:opacity-80"
-          >
-            Github
+        <div className={commonClasses.navItem}>
+          {navLinks.map(({ href, label }) => (
+            <Link key={href} href={href} className={commonClasses.link}>{label}</Link>
+          ))}
+
+          {/* external link stays as <a> */}
+
+          <a href="https://shop.dragonspurr.ca" className={commonClasses.link} {...externalLinkAttributes}>
+            Shop
           </a>
         </div>
       </div>

@@ -1,6 +1,6 @@
 {
-  "name": "boxingoctopus-web",
-  "version": "1.0.1",
+  "name": "dragonspurr-web",
+  "version": "1.0.0",
   "private": true,
   "engines": {
     "npm": ">=8.7.0"

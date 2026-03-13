@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Collective from '@/app/collective/page';
+import Collective from '@/app/portfolio/page';
 
 describe('Collective page', () => {
   it('renders the Collective title', () => {
