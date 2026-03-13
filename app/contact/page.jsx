@@ -5,9 +5,9 @@ import emailjs from '@emailjs/browser';
 import Swal from 'sweetalert2';
 import { commonClasses, socialMedia, siteInfo } from "@/app/lib/constants";
 
-const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-const USER_ID = process.env.NEXT_PUBLIC_EMAILJS_USER_ID;
+const SERVICE_ID = process.env.NEXT_PRIVATE_EMAILJS_SERVICE_ID;
+const TEMPLATE_ID = process.env.NEXT_PRIVATE_EMAILJS_TEMPLATE_ID;
+const USER_ID = process.env.NEXT_PRIVATE_EMAILJS_USER_ID;
 
 export default function Contact() {
   const formRef = useRef(null);
