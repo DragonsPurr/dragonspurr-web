@@ -18,6 +18,21 @@ jest.mock('sweetalert2', () => ({
   },
 }));
 
+jest.mock('@/app/lib/constants', () => {
+  const actual = jest.requireActual('@/app/lib/constants');
+  return {
+    ...actual,
+    envConfig: {
+      ...actual.envConfig,
+      emailjs: {
+        serviceId: 'test-service',
+        templateId: 'test-template',
+        userId: 'test-user',
+      },
+    },
+  };
+});
+
 describe('Contact page', () => {
   beforeEach(() => {
     mockSendForm.mockReset();

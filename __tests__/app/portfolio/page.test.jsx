@@ -16,7 +16,7 @@ describe('Portfolio page', () => {
 
   it('portfolio logo has correct src', () => {
     render(<Portfolio />);
-    const img = screen.getByRole('img', { name: /portfolio logo/i });
+    const img = screen.getByRole('img', { name: /dragon's purr crafts and sundry logo/i });
     expect(img).toHaveAttribute('src', expect.stringContaining('square-logo-for-dark-bkgds.png'));
   });
 

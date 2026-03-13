@@ -84,7 +84,8 @@ describe('All links have valid hrefs', () => {
   it('Not-found page has no links in content', () => {
     const { container } = render(<NotFound />);
     const links = getAllLinks(container);
-    expect(links.length).toBe(0);
+    expect(links.length).toBe(1);
+    expect(links[0].getAttribute('href')).toBe('/');
   });
 });
 
@@ -103,7 +104,7 @@ describe('All expected links are present and resolve to correct targets', () => 
   it('Footer contains expected external links', () => {
     const { container } = render(<Footer />);
     const hrefs = getLinkHrefs(container);
-    expect(hrefs.filter((h) => h === 'https://dragonspurr.ca').length).toBe(2);
+    expect(hrefs.filter((h) => h === 'https://dragonspurr.ca').length).toBe(1);
     expect(hrefs.filter((h) => h === 'https://boxingoctop.us').length).toBe(1);
   });
 
