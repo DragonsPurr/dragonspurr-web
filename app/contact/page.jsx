@@ -57,17 +57,17 @@ export default function Contact() {
                 className="w-[5%] min-w-[32px] inline mr-5 grayscale contrast-200 brightness-200"
               />
             </a>
-            <a href={socialMedia.linkedin} {...externalLinkAttributes}>
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg"
-                alt={`${siteInfo.name} on LinkedIn`}
-                className="w-[5%] min-w-[32px] inline mr-5 grayscale contrast-200 invert"
-              />
-            </a>
             <a href={socialMedia.heycafe} {...externalLinkAttributes}>
               <img
                 src="https://assets.heycafecdn.com/logos/svg/logo_round_transparent_purple.svg?cache=wqn4mia5vlfugr4"
                 alt={`${siteInfo.name} on Hey.Café`}
+                className="w-[5%] min-w-[32px] inline mr-5 grayscale contrast-200 invert"
+              />
+            </a>
+            <a href={socialMedia.eh} {...externalLinkAttributes}>
+              <img
+                src="https://dp-assets.tor1.digitaloceanspaces.com/socials/Eh-Logo.svg"
+                alt={`${siteInfo.name} on Eh!`}
                 className="w-[5%] min-w-[32px] inline mr-5 grayscale contrast-200 invert"
               />
             </a>

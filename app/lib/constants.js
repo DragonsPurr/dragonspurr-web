@@ -23,12 +23,11 @@ const siteInfo = {
 };
 
 const socialMedia = {
-    bluesky: "https://bsky.app/profile/dragonspurr",
-    linkedin: "https://www.linkedin.com/in/dragonspurr",
+    bluesky: "https://bsky.app/profile/dragonspurr.bsky.social",
     heycafe: "https://hey.cafe/@dragonspurr",
+    eh: "https://ehnw.ca/u/dragonspurr",
     instagram: "https://www.instagram.com/dragonspurr",
     facebook: "https://www.facebook.com/dragonspurr",
-    youtube: "https://www.youtube.com/dragonspurr",
 };
 
 const commonClasses = {
