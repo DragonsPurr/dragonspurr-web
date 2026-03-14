@@ -119,7 +119,7 @@ export default function Contact() {
             <textarea
               id="message"
               name="message"
-              rows={3}
+              rows={10}
               className={commonClasses.formInput}
             />
           </div>
