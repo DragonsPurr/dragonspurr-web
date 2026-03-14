@@ -10,8 +10,12 @@ export default function Home() {
           className="w-full max-w-md mt-[100px]"
         />
       </div>
-      <div className="flex justify-end items-center font-cinzel_decorative text-[40px] leading-none mt-[100px]">
-        Welcome to Dragon's Purr Crafts and Sundry. We're a Toronto-Based creative duo that makes quirky, bespoke crafts out of die-cut vinyl, paper, and various other mediums.
+      <div className="flex justify-end items-center font-cormorant_garamond text-[40px] leading-none mt-[100px]">
+        <p>
+          Welcome to Dragon's Purr Crafts and Sundry! 
+          <br /><br />
+          We're a Toronto-Based creative duo that makes quirky, bespoke crafts out of die-cut vinyl, paper, and various other mediums.
+        </p>
       </div>
     </div>
   );
