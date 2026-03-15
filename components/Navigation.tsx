@@ -15,7 +15,7 @@ const navLinks = [
 
 export function Navigation() {
   return (
-    <nav className="bg-black w-full flex justify-center pt-2.5 pr-[100px] sticky top-0 z-50">
+    <nav className="bg-black w-full flex justify-center pt-2.5 pr-[100px] sticky top-0 z-50 border-b-2 border-red-800 pb-2">
       <div className="w-full max-w-7xl flex items-center justify-between">
         <Link href="/" className="flex items-center">
           <Image
