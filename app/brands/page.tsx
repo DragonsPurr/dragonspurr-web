@@ -21,9 +21,6 @@ const brands = [
 export default function Brands() {
   return (
     <div className="container mx-auto">
-      <div className={commonClasses.pageHeader}>
-        <strong>Brands</strong>
-      </div>
       <div className="space-y-8 mb-6">
         {brands.map((brand) => (
           <div

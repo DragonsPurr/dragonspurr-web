@@ -4,9 +4,6 @@ import { commonClasses, asset_base_url } from "@/app/lib/constants";
 export default function About() {
   return (
     <div className="container mx-auto">
-      <div className={commonClasses.pageHeader}>
-        <strong>About Us</strong>
-      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
         <div className="flex justify-start items-start">
           <Image

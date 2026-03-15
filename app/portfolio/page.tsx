@@ -66,10 +66,6 @@ export default function Portfolio() {
 
   return (
     <div className="container mx-auto">
-      <div className={commonClasses.pageHeader}>
-        <strong>Portfolio</strong>
-      </div>
-
       {error && (
         <div className="mb-6 rounded-lg bg-red-900/50 border border-red-700 px-4 py-3 text-red-200" role="alert">
           {error}

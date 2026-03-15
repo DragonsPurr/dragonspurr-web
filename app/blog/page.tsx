@@ -160,9 +160,6 @@ export default function Blog() {
 
   return (
     <div className="container mx-auto px-4">
-      <div className={commonClasses.pageHeader}>
-        <strong>Blog</strong>
-      </div>
       {error && (
         <div className="mb-6 rounded-lg bg-red-900/50 border border-red-700 px-4 py-3 text-red-200" role="alert">
           {error}
