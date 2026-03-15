@@ -45,10 +45,24 @@ export default function Portfolio() {
 
   const closeModal = useCallback(() => setModalPhoto(null), []);
 
+  const currentIndex = modalPhoto ? data.photos.findIndex((p) => p.id === modalPhoto.id) : -1;
+  const hasPrevPhoto = currentIndex > 0;
+  const hasNextPhoto = currentIndex >= 0 && currentIndex < data.photos.length - 1;
+  const goToPrev = useCallback(() => {
+    if (!hasPrevPhoto) return;
+    setModalPhoto(data.photos[currentIndex - 1]);
+  }, [data.photos, currentIndex, hasPrevPhoto]);
+  const goToNext = useCallback(() => {
+    if (!hasNextPhoto) return;
+    setModalPhoto(data.photos[currentIndex + 1]);
+  }, [data.photos, currentIndex, hasNextPhoto]);
+
   useEffect(() => {
     if (!modalPhoto) return;
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') closeModal();
+      if (e.key === 'ArrowLeft') goToPrev();
+      if (e.key === 'ArrowRight') goToNext();
     };
     document.addEventListener('keydown', onKeyDown);
     document.body.style.overflow = 'hidden';
@@ -56,7 +70,7 @@ export default function Portfolio() {
       document.removeEventListener('keydown', onKeyDown);
       document.body.style.overflow = '';
     };
-  }, [modalPhoto, closeModal]);
+  }, [modalPhoto, closeModal, goToPrev, goToNext]);
 
   const hasPrev = page > 1;
   const hasNext = page < data.pages;
@@ -168,6 +182,26 @@ export default function Portfolio() {
             >
               ×
             </button>
+            {hasPrevPhoto && (
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); goToPrev(); }}
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center text-white bg-black/60 hover:bg-red-800 rounded-r-md text-2xl font-bold"
+                aria-label="Previous image"
+              >
+                ‹
+              </button>
+            )}
+            {hasNextPhoto && (
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); goToNext(); }}
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center text-white bg-black/60 hover:bg-red-800 rounded-l-md text-2xl font-bold"
+                aria-label="Next image"
+              >
+                ›
+              </button>
+            )}
             <div className="relative flex-1 min-h-0 rounded-lg overflow-hidden bg-gray-900">
               <Image
                 src={modalPhoto.urlModal ?? modalPhoto.urlLarge ?? modalPhoto.urlMedium ?? ''}
