@@ -25,12 +25,6 @@ export const portfolioItem = {
       type: 'text',
       description: 'Description for the image (used as caption).',
     },
-    {
-      name: 'url',
-      title: 'Link URL',
-      type: 'url',
-      description: 'Optional. Link when the item is clicked (e.g. project page, external site).',
-    },
   ],
   preview: {
     select: { title: 'title', media: 'image' },

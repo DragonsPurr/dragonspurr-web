@@ -89,22 +89,34 @@ export default function Portfolio() {
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-4 min-w-0">
           {data.photos.map((photo) => (
-            <button
-              key={photo.id}
-              type="button"
-              onClick={() => setModalPhoto(photo)}
-              className={`${cellClass} p-0 border-0 text-left`}
-              aria-label={photo.title ? `View ${photo.title}` : 'View portfolio image'}
-            >
-              <Image
-                src={photo.urlMedium ?? ''}
-                alt={photo.title || 'Portfolio image'}
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                loading="lazy"
-                width={500}
-                height={500}
-              />
-            </button>
+            <figure key={photo.id} className="min-w-0">
+              <button
+                type="button"
+                onClick={() => setModalPhoto(photo)}
+                className={`${cellClass} p-0 border-0 text-left`}
+                aria-label={photo.title ? `View ${photo.title}` : 'View portfolio image'}
+              >
+                <Image
+                  src={photo.urlMedium ?? ''}
+                  alt={photo.title || 'Portfolio image'}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                  width={500}
+                  height={500}
+                />
+              </button>
+              {photo.title && (
+                <figcaption className="mt-1.5 text-center">
+                  <button
+                    type="button"
+                    onClick={() => setModalPhoto(photo)}
+                    className="font-cormorant_garamond text-lg text-gray-300 hover:text-red-600 transition-colors focus:outline-none focus:underline w-full"
+                  >
+                    {photo.title}
+                  </button>
+                </figcaption>
+              )}
+            </figure>
           ))}
         </div>
       )}

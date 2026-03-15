@@ -12,6 +12,7 @@ describe('Navigation', () => {
     expect(screen.getByRole('link', { name: /home/i })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /about/i })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /brands/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /blog/i })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /portfolio/i })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /contact/i })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /shop/i })).toBeInTheDocument();
@@ -21,6 +22,7 @@ describe('Navigation', () => {
     render(<Navigation />);
     expect(screen.getByRole('link', { name: /home/i })).toHaveAttribute('href', '/');
     expect(screen.getByRole('link', { name: /about/i })).toHaveAttribute('href', '/about');
+    expect(screen.getByRole('link', { name: /blog/i })).toHaveAttribute('href', '/blog');
     expect(screen.getByRole('link', { name: /contact/i })).toHaveAttribute('href', '/contact');
     expect(screen.getByRole('link', { name: /shop/i })).toHaveAttribute('href', 'https://shop.dragonspurr.ca');
   });

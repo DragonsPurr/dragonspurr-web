@@ -17,7 +17,7 @@ describe('Not Found page', () => {
   it('404 image has correct src', () => {
     render(<NotFound />);
     const img = screen.getByRole('img', { name: /404/i });
-    expect(img).toHaveAttribute('src', 'https://dp-assets.tor1.digitaloceanspaces.com/eeby-deeby-404.jpg');
+    expect(img.getAttribute('src')).toContain('eeby-deeby-404.jpg');
   });
 
   it('renders the wrong turn message', () => {

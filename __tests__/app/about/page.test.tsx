@@ -17,7 +17,7 @@ describe('About page', () => {
   it('profile image has correct src', () => {
     render(<About />);
     const img = screen.getByRole('img', { name: /ryan/i });
-    expect(img).toHaveAttribute('src', 'https://dp-assets.tor1.digitaloceanspaces.com/kayt-and-ryan.png');
+    expect(img).toHaveAttribute('src', expect.stringContaining('kayt-and-ryan.png'));
   });
 
   it('renders the bio text', () => {

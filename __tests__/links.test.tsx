@@ -8,7 +8,18 @@ import Portfolio from '@/app/portfolio/page';
 import Contact from '@/app/contact/page';
 import NotFound from '@/app/not-found';
 
-const VALID_INTERNAL_PATHS = ['/', '/about', '/brands', '/portfolio', '/contact'];
+jest.mock('sweetalert2', () => ({ __esModule: true, default: { fire: jest.fn() } }));
+
+const mockFetch = (url: string) => {
+  if (url.startsWith('/api/portfolio'))
+    return Promise.resolve({ ok: true, json: () => Promise.resolve({ items: [], total: 0 }) });
+  return Promise.reject(new Error('unexpected fetch'));
+};
+beforeAll(() => {
+  global.fetch = mockFetch as typeof fetch;
+});
+
+const VALID_INTERNAL_PATHS = ['/', '/about', '/brands', '/blog', '/portfolio', '/contact'];
 
 function getAllLinks(container: HTMLElement): HTMLAnchorElement[] {
   return Array.from(container.querySelectorAll('a[href]'));
@@ -96,6 +107,7 @@ describe('All expected links are present and resolve to correct targets', () => 
     expect(hrefs).toContain('/');
     expect(hrefs).toContain('/about');
     expect(hrefs).toContain('/brands');
+    expect(hrefs).toContain('/blog');
     expect(hrefs).toContain('/portfolio');
     expect(hrefs).toContain('/contact');
     expect(hrefs).toContain('https://shop.dragonspurr.ca');
