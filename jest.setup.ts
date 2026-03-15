@@ -1,4 +1,4 @@
-require('@testing-library/jest-dom');
+import '@testing-library/jest-dom';
 
 // EmailJS env for Contact form tests (set before any modules load)
 process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID =

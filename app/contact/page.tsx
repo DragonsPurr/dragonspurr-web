@@ -1,17 +1,19 @@
 'use client';
 
 import { useRef } from 'react';
+import Image from 'next/image';
 import emailjs from '@emailjs/browser';
 import Swal from 'sweetalert2';
-import { commonClasses, socialMedia, 
+import { commonClasses, socialMedia,
   siteInfo, envConfig, externalLinkAttributes } from "@/app/lib/constants";
 
 export default function Contact() {
-  const formRef = useRef(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: { preventDefault(): void; currentTarget: HTMLFormElement }) => {
     e.preventDefault();
-    if (!envConfig.emailjs.serviceId || !envConfig.emailjs.templateId 
+    const form = e.currentTarget;
+    if (!envConfig.emailjs.serviceId || !envConfig.emailjs.templateId
       || !envConfig.emailjs.userId) {
       Swal.fire({
         icon: 'error',
@@ -20,17 +22,18 @@ export default function Contact() {
       });
       return;
     }
-    emailjs.sendForm(envConfig.emailjs.serviceId, 
-      envConfig.emailjs.templateId, e.target, { 
-        publicKey: envConfig.emailjs.userId }).then(
+    emailjs.sendForm(envConfig.emailjs.serviceId,
+      envConfig.emailjs.templateId, form, {
+        publicKey: envConfig.emailjs.userId,
+      }).then(
       () => {
         Swal.fire({
           icon: 'success',
           title: 'Message Sent Successfully',
         });
-        e.target.reset();
+        form.reset();
       },
-      (error) => {
+      (error: { text?: string }) => {
         Swal.fire({
           icon: 'error',
           title: 'Oops, something went wrong',
@@ -49,26 +52,32 @@ export default function Contact() {
         <div className={commonClasses.bodyText}>
           <p>
             If you have any questions, comments, or concerns, please feel free to reach out to us on social media.
-            <br />
+            <br /><br />
             <a href={socialMedia.bluesky} {...externalLinkAttributes}>
-              <img
+              <Image
                 src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Bluesky_Logo.svg"
                 alt={`${siteInfo.name} on Bluesky`}
-                className="w-[5%] min-w-[32px] inline mr-5 grayscale contrast-200 brightness-200"
+                className="inline mr-5 grayscale contrast-200 brightness-200"
+                width={32}
+                height={32}
               />
             </a>
             <a href={socialMedia.heycafe} {...externalLinkAttributes}>
-              <img
+              <Image
                 src="https://assets.heycafecdn.com/logos/svg/logo_round_transparent_purple.svg?cache=wqn4mia5vlfugr4"
                 alt={`${siteInfo.name} on Hey.Café`}
-                className="w-[5%] min-w-[32px] inline mr-5 grayscale contrast-200 invert"
+                className="inline mr-5 grayscale contrast-200 invert"
+                width={32}
+                height={32}
               />
             </a>
             <a href={socialMedia.eh} {...externalLinkAttributes}>
-              <img
+              <Image
                 src="https://dp-assets.tor1.digitaloceanspaces.com/socials/Eh-Logo.svg"
                 alt={`${siteInfo.name} on Eh!`}
-                className="w-[5%] min-w-[32px] inline mr-5 grayscale contrast-200 invert"
+                className="inline mr-5 grayscale contrast-200 invert"
+                width={32}
+                height={32}
               />
             </a>
             <br /><br />

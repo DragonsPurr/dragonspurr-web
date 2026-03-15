@@ -5,7 +5,14 @@ import { usePathname } from 'next/navigation';
 import LogRocket from 'logrocket';
 import { envConfig } from '@/app/lib/constants';
 
-function initGA() {
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+    dataLayer?: unknown[];
+  }
+}
+
+function initGA(): void {
   if (typeof window === 'undefined' || !envConfig.googleAnalyticsId) return;
   const id = envConfig.googleAnalyticsId;
   if (window.gtag) {
@@ -13,10 +20,11 @@ function initGA() {
     return;
   }
   window.dataLayer = window.dataLayer || [];
-  function gtag(...args) {
-    window.dataLayer.push(args);
+  function gtag(...args: unknown[]) {
+    window.dataLayer!.push(args);
   }
-  window.gtag('js', new Date());
+  window.gtag = gtag;
+  (window as Window & { gtag: (...args: unknown[]) => void }).gtag('js', new Date());
   gtag('config', id, { cookie_flags: 'SameSite=None; Secure' });
 }
 

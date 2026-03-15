@@ -10,12 +10,12 @@ import NotFound from '@/app/not-found';
 
 const VALID_INTERNAL_PATHS = ['/', '/about', '/brands', '/portfolio', '/contact'];
 
-function getAllLinks(container) {
+function getAllLinks(container: HTMLElement): HTMLAnchorElement[] {
   return Array.from(container.querySelectorAll('a[href]'));
 }
 
-function getLinkHrefs(container) {
-  return getAllLinks(container).map((a) => a.getAttribute('href').trim());
+function getLinkHrefs(container: HTMLElement): string[] {
+  return getAllLinks(container).map((a) => a.getAttribute('href')!.trim());
 }
 
 describe('All links have valid hrefs', () => {
@@ -118,8 +118,8 @@ describe('All expected links are present and resolve to correct targets', () => 
   it('Contact page social links resolve to expected URLs', () => {
     const { container } = render(<Contact />);
     const hrefs = getLinkHrefs(container);
-    expect(hrefs).toContain('https://bsky.app/profile/dragonspurr');
-    expect(hrefs).toContain('https://www.linkedin.com/in/dragonspurr');
+    expect(hrefs).toContain('https://bsky.app/profile/dragonspurr.bsky.social');
     expect(hrefs).toContain('https://hey.cafe/@dragonspurr');
+    expect(hrefs).toContain('https://ehnw.ca/u/dragonspurr');
   });
 });

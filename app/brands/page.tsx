@@ -1,4 +1,5 @@
 import { commonClasses, logoTypes, externalLinkAttributes } from "@/app/lib/constants";
+import Image from 'next/image';
 
 const brands = [
   {
@@ -10,7 +11,7 @@ const brands = [
   },
   {
     href: "https://hipsterdonut.myspreadshop.ca",
-    img: "https://assets.boxingoctop.us/img/hipsterdonut-logo-wide.png",
+    img: logoTypes.hipsterdonut_logo,
     alt: "Hipster Donut Apparel",
     title: "Hipster Donut Apparel",
     description: "Hipster Donut Apparel is our sister brand. In-house designs on apparel of all kinds. Nerdy, snarky, sarcastic, topical, and above all, fun.",
@@ -20,18 +21,28 @@ const brands = [
 export default function Brands() {
   return (
     <div className="container mx-auto">
-      <div className={commonClasses.pageHeader}><strong>Brands</strong></div>
+      <div className={commonClasses.pageHeader}>
+        <strong>Brands</strong>
+      </div>
       <div className="space-y-8 mb-6">
         {brands.map((brand) => (
-          <div 
+          <div
             key={brand.href}
             className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center"
           >
             <a href={brand.href} className="block"{...externalLinkAttributes}>
-              <img src={brand.img} alt={brand.alt} width={400} className="max-w-full h-auto" />
+              <Image 
+                src={brand.img} 
+                alt={brand.alt} 
+                width={400} 
+                height={400} 
+                className="max-w-full h-auto" 
+              />
             </a>
             <div>
-              <h3 className={commonClasses.sectionHeader}><strong>{brand.title}</strong></h3>
+              <h3 className={commonClasses.sectionHeader}>
+                <strong>{brand.title}</strong>
+              </h3>
               <br /><br />
               <p className={commonClasses.bodyText}>{brand.description}</p>
             </div>

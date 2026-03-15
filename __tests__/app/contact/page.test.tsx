@@ -7,14 +7,14 @@ const mockSwalFire = jest.fn();
 jest.mock('@emailjs/browser', () => ({
   __esModule: true,
   default: {
-    sendForm: (...args) => mockSendForm(...args),
+    sendForm: (...args: unknown[]) => mockSendForm(...args),
   },
 }));
 
 jest.mock('sweetalert2', () => ({
   __esModule: true,
   default: {
-    fire: (...args) => mockSwalFire(...args),
+    fire: (...args: unknown[]) => mockSwalFire(...args),
   },
 }));
 
@@ -51,14 +51,6 @@ describe('Contact page', () => {
     expect(img).toHaveAttribute('src', expect.stringContaining('Bluesky_Logo.svg'));
   });
 
-  it('renders the LinkedIn social image with correct alt and src', () => {
-    render(<Contact />);
-    const img = screen.getByRole('img', { name: /dragon's purr crafts and sundry on linkedin/i });
-    expect(img).toBeInTheDocument();
-    expect(img).toHaveAttribute('alt', 'Dragon\'s Purr Crafts and Sundry on LinkedIn');
-    expect(img).toHaveAttribute('src', expect.stringContaining('LinkedIn_icon.svg'));
-  });
-
   it('renders the Hey.Café social image with correct alt and src', () => {
     render(<Contact />);
     const img = screen.getByRole('img', { name: /dragon's purr crafts and sundry on hey\.café/i });
@@ -70,7 +62,7 @@ describe('Contact page', () => {
   it('social images are wrapped in links that open in new tab', () => {
     render(<Contact />);
     const blueskyLink = screen.getByRole('link', { name: /dragon's purr crafts and sundry on bluesky/i });
-    expect(blueskyLink).toHaveAttribute('href', 'https://bsky.app/profile/dragonspurr');
+    expect(blueskyLink).toHaveAttribute('href', 'https://bsky.app/profile/dragonspurr.bsky.social');
     expect(blueskyLink).toHaveAttribute('target', '_blank');
   });
 
@@ -97,7 +89,7 @@ describe('Contact page', () => {
       fireEvent.change(messageInput, { target: { value: 'Hello!' } });
 
       const form = emailInput.closest('form');
-      fireEvent.submit(form);
+      fireEvent.submit(form!);
 
       await Promise.resolve();
       await Promise.resolve();
@@ -125,7 +117,7 @@ describe('Contact page', () => {
       render(<Contact />);
 
       const form = screen.getByLabelText(/email address/i).closest('form');
-      fireEvent.submit(form);
+      fireEvent.submit(form!);
 
       await Promise.resolve();
       await Promise.resolve();

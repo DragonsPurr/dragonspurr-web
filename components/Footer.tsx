@@ -12,7 +12,7 @@ export function Footer() {
         </a>{' '}
         | All content and assets are Copyright © {year}{' '}
         <a href="https://dragonspurr.ca" className={commonClasses.link}{...externalLinkAttributes}>
-          Dragon's Purr Crafts and Sundry Ltd.
+          Dragon&apos;s Purr Crafts and Sundry Ltd.
         </a>
       </div>
     </footer>
