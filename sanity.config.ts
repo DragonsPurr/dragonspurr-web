@@ -9,7 +9,6 @@ import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
 
-import { createPortfolioItemsFromBatch } from './sanity/actions/createPortfolioItemsFromBatch';
 import { apiVersion, dataset, projectId } from './sanity/env';
 import { schema } from './sanity/schemaTypes';
 import { structure } from './sanity/structure';
@@ -19,12 +18,6 @@ export default defineConfig({
   projectId: projectId!,
   dataset: dataset!,
   schema,
-  document: {
-    actions: (prev, { schemaType }) =>
-      schemaType === 'portfolioBatch'
-        ? [createPortfolioItemsFromBatch, ...prev]
-        : prev,
-  },
   plugins: [
     structureTool({ structure }),
     visionTool({ defaultApiVersion: apiVersion }),
