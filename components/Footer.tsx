@@ -4,8 +4,8 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="fixed bottom-0 left-0 right-0 z-10 bg-black w-full py-4 border-t-2 border-red-800 pt-2">
-      <div className="text-center font-cormorant_garamond text-lg text-white">
+    <footer className="md:fixed md:bottom-0 md:left-0 md:right-0 z-10 bg-black w-full py-3 md:py-4 border-t-2 border-red-800 pt-2">
+      <div className="text-center font-cormorant_garamond text-base md:text-lg text-white px-4">
         Site design by{' '}
         <a href="https://boxingoctop.us" className={commonClasses.link} {...externalLinkAttributes}>
           Boxing Octopus Creative
