@@ -22,7 +22,7 @@
     "@sanity/image-url": "^2.0.3",
     "@sanity/vision": "^5.13.0",
     "logrocket": "^3.0.1",
-    "next": "^16.1.6",
+    "next": "^16.2.1",
     "next-sanity": "^12.1.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
