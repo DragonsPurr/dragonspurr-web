@@ -2,9 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --dp-bkgd-color: #000000;
+  --dp-light-red: #dc2626;
+  --dp-dark-red: #991b1b;
+  --dp-gray-800: #1f2937;
+  --dp-gray-600: #4b5563;
+  /* Use with `background-image:` — `bg-[var(...)]` is compiled as background-color, not the image */
+  --dp-main-content-bg-image: url("https://dp-assets.tor1.digitaloceanspaces.com/brand/publication-banner.png");
+}
+
 html,
 body {
-  @apply bg-black text-white min-h-full m-0;
+  @apply bg-[var(--dp-bkgd-color)] text-white min-h-full m-0;
   font-family: var(--font-cormorant), var(--font-cinzel), -apple-system,
     BlinkMacSystemFont, 'Times New Roman', serif;
   -webkit-font-smoothing: antialiased;
@@ -13,11 +23,11 @@ body {
 
 @layer components {
   .dp-page-header {
-    @apply font-cinzel_decorative text-4xl md:text-[60px] text-red-600 leading-none mb-8 md:mb-12;
+    @apply font-cinzel_decorative text-4xl md:text-[60px] text-[var(--dp-light-red)] leading-none mb-8 md:mb-12;
   }
 
   .dp-section-header {
-    @apply font-cinzel_decorative text-2xl md:text-4xl text-red-600;
+    @apply font-cinzel_decorative text-2xl md:text-4xl text-[var(--dp-light-red)];
   }
 
   .dp-circular-image {
@@ -29,7 +39,7 @@ body {
   }
 
   .dp-link {
-    @apply text-white no-underline hover:text-red-600 target:text-red-600;
+    @apply text-white no-underline hover:text-[var(--dp-light-red)] target:text-[var(--dp-light-red)];
   }
 
   .dp-nav-item {
@@ -37,21 +47,21 @@ body {
   }
 
   .dp-form-label {
-    @apply block font-cinzel text-xl mb-1 text-red-600;
+    @apply block font-cinzel text-xl mb-1 text-[var(--dp-light-red)];
   }
 
   .dp-form-input {
-    @apply w-full font-cormorant_garamond text-lg px-3 py-2 rounded-md border border-gray-600 bg-black text-white;
+    @apply w-full font-cormorant_garamond text-lg px-3 py-2 rounded-md border border-[var(--dp-gray-600)] bg-[var(--dp-bkgd-color)] text-white;
   }
 
   .dp-form-button {
-    @apply font-cinzel text-lg px-4 py-2 rounded-md bg-red-800 text-white hover:bg-red-600;
+    @apply font-cinzel text-lg px-4 py-2 rounded-md bg-[var(--dp-dark-red)] text-white hover:bg-[var(--dp-light-red)];
   }
 
   .dp-main-content {
     @apply flex-1 flex justify-center items-start md:items-center pt-12 px-4 pb-28 md:pb-24
-      bg-[url("https://dp-assets.tor1.digitaloceanspaces.com/brand/publication-banner.png")] bg-cover bg-center bg-fixed
-      bg-gray-800 bg-blend-soft-light;
+      bg-cover bg-center bg-fixed bg-[var(--dp-gray-800)] bg-blend-soft-light;
+    background-image: var(--dp-main-content-bg-image);
   }
 }
 
