@@ -2,7 +2,6 @@ import { Analytics } from './Analytics';
 import { LayoutSwitcher } from './LayoutSwitcher';
 import { logoTypes, siteInfo } from './lib/constants';
 import {
-  Bebas_Neue,
   Cinzel_Decorative,
   Cinzel,
   Cormorant_Garamond,
@@ -10,7 +9,6 @@ import {
 import './globals.css';
 import type { ReactNode } from 'react';
 
-const bebasNeue = Bebas_Neue({ weight: '400', subsets: ['latin'], variable: '--font-bebas' });
 const cinzelDecorative = Cinzel_Decorative({
   weight: ['400', '700', '900'],
   subsets: ['latin'],
@@ -48,7 +46,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
-      className={`bg-black ${bebasNeue.variable} ${cinzelDecorative.variable} ${cinzel.variable} ${cormorant.variable}`}
+      className={`bg-black ${cinzelDecorative.variable} ${cinzel.variable} ${cormorant.variable}`}
     >
       <head>
         <script

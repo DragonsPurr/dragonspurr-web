@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { commonClasses, asset_base_url } from "@/app/lib/constants";
+import { asset_base_url } from "@/app/lib/constants";
 
 export default function About() {
   return (
@@ -9,14 +9,14 @@ export default function About() {
           <Image
             src={`${asset_base_url}/kayt-and-ryan.png`}
             alt="Kayt and Ryan"
-            className={commonClasses.circularImage}
+            className="dp-circular-image"
             width={500}
             height={500}
           />
         </div>
-        <div className={commonClasses.bodyText}>
+        <div className="dp-body-text">
           <p>
-            <strong className={commonClasses.sectionHeader}>Who We Are</strong>
+            <strong className="dp-section-header">Who We Are</strong>
             <br /><br />
             Hi! We&apos;re Kayt and Ryan!<br />
             Co-Founders of <strong className="text-red-600"><em>Dragon&apos;s Purr Crafts and Sundry!</em></strong> 
@@ -27,9 +27,9 @@ export default function About() {
             <br />
           </p>
         </div>
-        <div className={commonClasses.bodyText}>
+        <div className="dp-body-text">
           <p>
-            <strong className={commonClasses.sectionHeader}>What We Make</strong>
+            <strong className="dp-section-header">What We Make</strong>
             <br /><br />
             If you can slap vinyl on it, we can make it. From t-shirts to stickers, to mugs, keychains, and much more. Beyond the custom die-cut vinyl, we also offer small-scale custom engravings, and our own in-house designs on apparel courtesy of our sister brand, Hipster Donut Apparel. Check our portfolio page for some of our past work!
             <br /><br />

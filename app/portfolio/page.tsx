@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { commonClasses } from '@/app/lib/constants';
 import Image from 'next/image';
 
 const PHOTOS_PER_PAGE = 18;
@@ -140,7 +139,7 @@ export default function Portfolio() {
             type="button"
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={!hasPrev}
-            className={commonClasses.formButton}
+            className="dp-form-button"
             aria-label="Previous page"
           >
             Previous
@@ -153,7 +152,7 @@ export default function Portfolio() {
             type="button"
             onClick={() => setPage((p) => Math.min(data.pages, p + 1))}
             disabled={!hasNext}
-            className={commonClasses.formButton}
+            className="dp-form-button"
             aria-label="Next page"
           >
             Next

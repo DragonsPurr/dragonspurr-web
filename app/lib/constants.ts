@@ -30,20 +30,6 @@ const socialMedia = {
   facebook: "https://www.facebook.com/dragonspurr",
 };
 
-const commonClasses = {
-  pageHeader: "font-cinzel_decorative text-4xl md:text-[60px] text-red-600 leading-none mb-8 md:mb-12",
-  sectionHeader: "font-cinzel_decorative text-2xl md:text-4xl text-red-600",
-  circularImage: "w-full max-w-[500px] h-auto rounded-full",
-  bodyText: "font-cormorant_garamond text-xl md:text-2xl",
-  link: "text-white no-underline hover:text-red-600 target:text-red-600",
-  navItem: "flex flex-wrap justify-end gap-2 md:gap-4 font-cinzel text-white text-lg md:text-3xl",
-  formLabel: "block font-cinzel text-xl mb-1 text-red-600",
-  formInput: "w-full font-cormorant_garamond text-lg px-3 py-2 rounded-md border border-gray-600 bg-black text-white",
-  formButton: "font-cinzel text-lg px-4 py-2 rounded-md bg-red-800 text-white hover:bg-red-600",
-  // Main wrapper is intentionally minimally spaced on small screens; desktop keeps the existing larger spacing.
-  mainContent: "flex-1 flex justify-center items-start md:items-center mt-0 md:mt-[100px] px-4 pb-28 md:pb-24 bg-[url('https://dp-assets.tor1.digitaloceanspaces.com/brand/publication-banner.png')] bg-cover bg-center bg-fixed bg-gray-800 bg-blend-soft-light",
-};
-
 const logoTypes = {
   circular_white: `${asset_base_url}/brand/circular-logo-white.png`,
   circular_black: `${asset_base_url}/brand/circular-logo.png`,
@@ -56,4 +42,4 @@ const logoTypes = {
   hipsterdonut_logo: `${asset_base_url}/brand/hipsterdonut-logo-wide.png`,
 };
 
-export { asset_base_url, externalLinkAttributes, commonClasses, logoTypes, siteInfo, socialMedia, envConfig };
+export { asset_base_url, externalLinkAttributes, logoTypes, siteInfo, socialMedia, envConfig };

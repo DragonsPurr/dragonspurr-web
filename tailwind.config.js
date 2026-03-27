@@ -10,7 +10,6 @@ module.exports = {
         cinzel_decorative: ['var(--font-cinzel-decorative)', 'serif'],
         cormorant_garamond: ['var(--font-cormorant)', 'serif'],
         cinzel: ['var(--font-cinzel)', 'serif'],
-        bebas: ['var(--font-bebas)', 'sans-serif'],
       },
     },
   },
