@@ -4,8 +4,7 @@ import { useRef } from 'react';
 import Image from 'next/image';
 import emailjs from '@emailjs/browser';
 import Swal from 'sweetalert2';
-import { commonClasses, socialMedia,
-  siteInfo, envConfig, externalLinkAttributes } from "@/app/lib/constants";
+import { socialMedia, siteInfo, envConfig, externalLinkAttributes } from "@/app/lib/constants";
 
 export default function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -45,11 +44,11 @@ export default function Contact() {
 
   return (
     <div className="container mx-auto">
-      <div className={commonClasses.pageHeader}>
+      <div className="dp-page-header">
         <strong>Contact</strong>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className={commonClasses.bodyText}>
+        <div className="dp-body-text">
           <p>
             If you have any questions, comments, or concerns, please feel free to reach out to us on social media.
             <br /><br />
@@ -86,7 +85,7 @@ export default function Contact() {
         </div>
         <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="from_name" className={commonClasses.formLabel}>
+            <label htmlFor="from_name" className="dp-form-label">
               <strong>Your Name</strong>
             </label>
             <input
@@ -94,11 +93,11 @@ export default function Contact() {
               type="text"
               name="from_name"
               placeholder="Your Name"
-              className={commonClasses.formInput}
+              className="dp-form-input"
             />
           </div>
           <div>
-            <label htmlFor="from_email" className={commonClasses.formLabel}>
+            <label htmlFor="from_email" className="dp-form-label">
               <strong>Email Address</strong>
             </label>
             <input
@@ -106,11 +105,11 @@ export default function Contact() {
               type="email"
               name="from_email"
               placeholder="Enter email"
-              className={commonClasses.formInput}
+              className="dp-form-input"
             />
           </div>
           <div>
-            <label htmlFor="subject" className={commonClasses.formLabel}>
+            <label htmlFor="subject" className="dp-form-label">
               <strong>Subject</strong>
             </label>
             <input
@@ -118,21 +117,21 @@ export default function Contact() {
               type="text"
               name="subject"
               placeholder="Enter Subject"
-              className={commonClasses.formInput}
+              className="dp-form-input"
             />
           </div>
           <div>
-            <label htmlFor="message" className={commonClasses.formLabel}>
+            <label htmlFor="message" className="dp-form-label">
               <strong>Message</strong>
             </label>
             <textarea
               id="message"
               name="message"
               rows={10}
-              className={commonClasses.formInput}
+              className="dp-form-input"
             />
           </div>
-          <button type="submit" className={commonClasses.formButton}>Submit</button>
+          <button type="submit" className="dp-form-button">Submit</button>
         </form>
       </div>
     </div>

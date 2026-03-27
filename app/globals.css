@@ -11,6 +11,50 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+@layer components {
+  .dp-page-header {
+    @apply font-cinzel_decorative text-4xl md:text-[60px] text-red-600 leading-none mb-8 md:mb-12;
+  }
+
+  .dp-section-header {
+    @apply font-cinzel_decorative text-2xl md:text-4xl text-red-600;
+  }
+
+  .dp-circular-image {
+    @apply w-full max-w-[500px] h-auto rounded-full;
+  }
+
+  .dp-body-text {
+    @apply font-cormorant_garamond text-xl md:text-2xl;
+  }
+
+  .dp-link {
+    @apply text-white no-underline hover:text-red-600 target:text-red-600;
+  }
+
+  .dp-nav-item {
+    @apply flex flex-wrap justify-end gap-2 md:gap-4 font-cinzel text-white text-lg md:text-3xl;
+  }
+
+  .dp-form-label {
+    @apply block font-cinzel text-xl mb-1 text-red-600;
+  }
+
+  .dp-form-input {
+    @apply w-full font-cormorant_garamond text-lg px-3 py-2 rounded-md border border-gray-600 bg-black text-white;
+  }
+
+  .dp-form-button {
+    @apply font-cinzel text-lg px-4 py-2 rounded-md bg-red-800 text-white hover:bg-red-600;
+  }
+
+  .dp-main-content {
+    @apply flex-1 flex justify-center items-start md:items-center pt-12 px-4 pb-28 md:pb-24
+      bg-[url("https://dp-assets.tor1.digitaloceanspaces.com/brand/publication-banner.png")] bg-cover bg-center bg-fixed
+      bg-gray-800 bg-blend-soft-light;
+  }
+}
+
 /* SweetAlert2: match site style (black/dark modal, red buttons) */
 .swal2-container {
   background-color: rgba(0, 0, 0, 0.6);

@@ -3,7 +3,6 @@
 import { usePathname } from 'next/navigation';
 import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
-import { commonClasses } from './lib/constants';
 import type { ReactNode } from 'react';
 
 export function LayoutSwitcher({ children }: { children: ReactNode }) {
@@ -21,7 +20,7 @@ export function LayoutSwitcher({ children }: { children: ReactNode }) {
   return (
     <>
       <Navigation />
-      <main className={commonClasses.mainContent}>
+      <main className="dp-main-content">
         <div className="w-full max-w-7xl mx-auto ">{children}</div>
       </main>
       <Footer />

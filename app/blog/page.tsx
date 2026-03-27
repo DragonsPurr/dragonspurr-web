@@ -1,6 +1,5 @@
 'use client';
 
-import { commonClasses } from '@/app/lib/constants';
 import Image from 'next/image';
 import { useState, useEffect, useMemo } from 'react';
 import { PortableText, type PortableTextComponents } from '@portabletext/react';
@@ -105,7 +104,7 @@ export default function Blog() {
           return (
             <a
               href={href}
-              className={commonClasses.link}
+              className="dp-link"
               {...(isExternal ? { target: '_blank', rel: 'noreferrer' } : {})}
             >
               {children}
@@ -181,7 +180,7 @@ export default function Blog() {
                   key={post.id}
                   className="w-full md:max-w-[80%] min-w-0 flex flex-col items-center bg-black/10 rounded-lg p-6"
                 >
-                  <h2 className={`${commonClasses.sectionHeader} text-center`}>{post.title}</h2>
+                  <h2 className="dp-section-header text-center">{post.title}</h2>
                   {post.publishedAt && (
                     <time
                       dateTime={post.publishedAt}
@@ -231,7 +230,7 @@ export default function Blog() {
                       )}
                     </figure>
                   )}
-                  <div className={`${commonClasses.bodyText} w-full text-left [&_p]:mb-4 [&_p:last-child]:mb-0`}>
+                  <div className={`dp-body-text w-full text-left [&_p]:mb-4 [&_p:last-child]:mb-0`}>
                     <PortableText value={post.content} components={portableTextComponents} />
                   </div>
                   {post.tags && post.tags.length > 0 && (
@@ -258,7 +257,7 @@ export default function Blog() {
                 type="button"
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={!hasPrev}
-                className={commonClasses.formButton}
+                className="dp-form-button"
                 aria-label="Previous page"
               >
                 Previous
@@ -270,7 +269,7 @@ export default function Blog() {
                 type="button"
                 onClick={() => setPage((p) => Math.min(pages, p + 1))}
                 disabled={!hasNext}
-                className={commonClasses.formButton}
+                className="dp-form-button"
                 aria-label="Next page"
               >
                 Next
@@ -296,7 +295,7 @@ export default function Blog() {
               placeholder="Search by title, author, keyword, or tag..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className={commonClasses.formInput}
+              className="dp-form-input"
               aria-label="Search posts by title, author, keyword, or tag"
             />
             {tagCloud.length > 0 && (

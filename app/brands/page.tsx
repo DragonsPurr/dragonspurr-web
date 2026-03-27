@@ -1,4 +1,4 @@
-import { commonClasses, logoTypes, externalLinkAttributes } from "@/app/lib/constants";
+import { logoTypes, externalLinkAttributes } from "@/app/lib/constants";
 import Image from 'next/image';
 
 const brands = [
@@ -37,11 +37,11 @@ export default function Brands() {
               />
             </a>
             <div>
-              <h3 className={commonClasses.sectionHeader}>
+              <h3 className="dp-section-header">
                 <strong>{brand.title}</strong>
               </h3>
               <br /><br />
-              <p className={commonClasses.bodyText}>{brand.description}</p>
+              <p className="dp-body-text">{brand.description}</p>
             </div>
           </div>
         ))}

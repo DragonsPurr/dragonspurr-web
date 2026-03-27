@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { externalLinkAttributes, commonClasses, logoTypes } from "@/app/lib/constants";
+import { externalLinkAttributes, logoTypes } from "@/app/lib/constants";
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
@@ -64,7 +64,7 @@ export function Navigation() {
             className={
               active
                 ? 'text-red-600 no-underline hover:text-red-600 focus:text-red-600'
-                : commonClasses.link
+                : 'dp-link'
             }
           >
             {label}
@@ -73,7 +73,7 @@ export function Navigation() {
       })}
       <a
         href="https://shop.dragonspurr.ca"
-        className={commonClasses.link}
+        className="dp-link"
         {...externalLinkAttributes}
       >
         Shop
@@ -95,7 +95,7 @@ export function Navigation() {
         </Link>
 
         {/* Desktop nav */}
-        {!isMobile && <div className={commonClasses.navItem}>{navLinksContent}</div>}
+        {!isMobile && <div className="dp-nav-item">{navLinksContent}</div>}
 
         {/* Mobile hamburger */}
         {isMobile && (
@@ -126,7 +126,7 @@ export function Navigation() {
                         key={href}
                         href={href}
                         aria-current={active ? 'page' : undefined}
-                        className={`${active ? 'text-red-600 no-underline hover:text-red-600 focus:text-red-600' : commonClasses.link} self-start whitespace-nowrap text-base md:text-lg`}
+                        className={`${active ? 'text-red-600 no-underline hover:text-red-600 focus:text-red-600' : 'dp-link'} self-start whitespace-nowrap text-base md:text-lg`}
                         onClick={() => setMenuOpen(false)}
                       >
                         {label}
@@ -135,7 +135,7 @@ export function Navigation() {
                   })}
                   <a
                     href="https://shop.dragonspurr.ca"
-                    className={`${commonClasses.link} self-start whitespace-nowrap text-base`}
+                    className={`dp-link self-start whitespace-nowrap text-base`}
                     {...externalLinkAttributes}
                     onClick={() => setMenuOpen(false)}
                   >
