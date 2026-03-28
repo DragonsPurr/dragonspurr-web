@@ -4,7 +4,8 @@
  * This configuration is used for the Sanity Studio mounted at /studio
  */
 
-import { visionTool } from '@sanity/vision';
+import { dashboardTool } from "@sanity/dashboard";
+import { vercelWidget } from "sanity-plugin-dashboard-widget-vercel";
 import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
@@ -20,7 +21,11 @@ export default defineConfig({
   schema,
   plugins: [
     structureTool({ structure }),
-    visionTool({ defaultApiVersion: apiVersion }),
     unsplashImageAsset(),
+    dashboardTool({
+      widgets: [
+        vercelWidget(),
+      ],
+    }),
   ],
 });

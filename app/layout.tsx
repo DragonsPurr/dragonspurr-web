@@ -1,5 +1,6 @@
 import { Analytics } from './Analytics';
 import { LayoutSwitcher } from './LayoutSwitcher';
+import { getBrandNavLinks } from './lib/brands';
 import { logoTypes, siteInfo } from './lib/constants';
 import {
   Cinzel_Decorative,
@@ -42,7 +43,9 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const brandNavLinks = await getBrandNavLinks();
+
   return (
     <html
       lang="en"
@@ -61,7 +64,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body className="bg-black text-white min-h-screen flex flex-col">
         <Analytics />
-        <LayoutSwitcher>{children}</LayoutSwitcher>
+        <LayoutSwitcher brandNavLinks={brandNavLinks}>{children}</LayoutSwitcher>
       </body>
     </html>
   );

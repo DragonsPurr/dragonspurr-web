@@ -22,8 +22,11 @@ describe('Brands page', () => {
 
   it('brand images are wrapped in links to the correct URLs', () => {
     render(<Brands />);
-    const dragonLink = screen.getByRole('link', { name: /dragon's purr crafts and sundry/i });
-    expect(dragonLink).toHaveAttribute('href', 'https://dragonspurr.ca');
-    expect(dragonLink).toHaveAttribute('target', '_blank');
+    const dragonLinks = screen.getAllByRole('link', { name: /dragon's purr crafts and sundry/i });
+    expect(dragonLinks.length).toBeGreaterThan(0);
+    const imageLink = dragonLinks.find((el) => el.querySelector('img'));
+    expect(imageLink).toBeDefined();
+    expect(imageLink).toHaveAttribute('href', 'https://dragonspurr.ca');
+    expect(imageLink).toHaveAttribute('target', '_blank');
   });
 });

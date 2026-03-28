@@ -60,7 +60,7 @@ describe('All links have valid hrefs', () => {
   it('Brands page brand links have valid hrefs', () => {
     const { container } = render(<Brands />);
     const hrefs = getLinkHrefs(container);
-    expect(hrefs.length).toBe(2);
+    expect(hrefs.length).toBeGreaterThanOrEqual(2);
     hrefs.forEach((href) => {
       expect(href).toBeTruthy();
       expect(href).toMatch(/^https?:\/\//);

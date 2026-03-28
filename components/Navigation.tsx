@@ -1,21 +1,26 @@
 'use client';
 
+import type { BrandNavItem } from '@/app/lib/brands';
+import { externalLinkAttributes, logoTypes } from '@/app/lib/constants';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { externalLinkAttributes, logoTypes } from "@/app/lib/constants";
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/brands", label: "Brands" },
-  { href: "/blog", label: "Blog" },
-  { href: "/portfolio", label: "Portfolio" },
-  { href: "/contact", label: "Contact" },
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/brands', label: 'Brands' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/portfolio', label: 'Portfolio' },
+  { href: '/contact', label: 'Contact' },
 ];
 
-export function Navigation() {
+type NavigationProps = {
+  brandNavLinks?: BrandNavItem[];
+};
+
+export function Navigation({ brandNavLinks = [] }: NavigationProps) {
   const pathname = usePathname();
   const [isMobile, setIsMobile] = useState(() => {
     if (typeof window === 'undefined') return false;
@@ -29,13 +34,11 @@ export function Navigation() {
     const mq = window.matchMedia('(max-width: 1023px)');
     const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
 
-    // Avoid calling setState on mount (prevents unnecessary test warnings)
     if (typeof mq.addEventListener === 'function') {
       mq.addEventListener('change', onChange);
       return () => mq.removeEventListener('change', onChange);
     }
 
-    // Safari fallback
     if (typeof mq.addListener === 'function' && typeof mq.removeListener === 'function') {
       mq.addListener(onChange);
       return () => mq.removeListener(onChange);
@@ -52,30 +55,71 @@ export function Navigation() {
     return pathname === href || pathname.startsWith(href + '/');
   };
 
-  const navLinksContent = (
-    <>
-      {navLinks.map(({ href, label }) => {
-        const active = isActive(href);
-        return (
+  const linkClass = (active: boolean) =>
+    active
+      ? 'text-red-600 no-underline hover:text-red-600 focus:text-red-600'
+      : 'dp-link';
+
+  const renderNavLink = (href: string, label: string) => {
+    const active = isActive(href);
+
+    if (href === '/brands' && brandNavLinks.length > 0) {
+      return (
+        <div key={href} className="group relative inline-block">
           <Link
-            key={href}
             href={href}
             aria-current={active ? 'page' : undefined}
-            className={
-              active
-                ? 'text-red-600 no-underline hover:text-red-600 focus:text-red-600'
-                : 'dp-link'
-            }
+            aria-haspopup="menu"
+            className={`inline-flex items-center gap-0.5 ${linkClass(active)}`}
           >
             {label}
+            <span aria-hidden className="text-[0.65em] opacity-80">
+              ▾
+            </span>
           </Link>
-        );
-      })}
-      <a
-        href="https://shop.dragonspurr.ca"
-        className="dp-link"
-        {...externalLinkAttributes}
+          <div
+            className="pointer-events-none absolute left-0 top-full z-[60] pt-1 opacity-0 invisible transition-opacity duration-150 group-hover:pointer-events-auto group-hover:opacity-100 group-hover:visible group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-focus-within:visible"
+          >
+            <ul
+              role="menu"
+              aria-label="Brand links"
+              className="min-w-[12rem] rounded-md border border-red-800 bg-black/95 py-2 shadow-lg md:min-w-[14rem]"
+            >
+              {brandNavLinks.map((b) => (
+                <li key={b._id} role="none">
+                  <a
+                    role="menuitem"
+                    href={b.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="block whitespace-normal px-4 py-2 font-cinzel text-base md:text-xl dp-link"
+                  >
+                    {b.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <Link
+        key={href}
+        href={href}
+        aria-current={active ? 'page' : undefined}
+        className={linkClass(active)}
       >
+        {label}
+      </Link>
+    );
+  };
+
+  const navLinksContent = (
+    <>
+      {navLinks.map(({ href, label }) => renderNavLink(href, label))}
+      <a href="https://shop.dragonspurr.ca" className="dp-link" {...externalLinkAttributes}>
         Shop
       </a>
     </>
@@ -94,10 +138,8 @@ export function Navigation() {
           />
         </Link>
 
-        {/* Desktop nav */}
         {!isMobile && <div className="dp-nav-item">{navLinksContent}</div>}
 
-        {/* Mobile hamburger */}
         {isMobile && (
           <div className="relative">
             <button
@@ -117,16 +159,44 @@ export function Navigation() {
 
             {menuOpen && (
               <div className="absolute right-0 top-full mt-2 w-max max-w-[80vw] rounded-lg border border-red-800 bg-black/95 px-4 py-3 flex flex-col gap-3 text-left">
-                {/* Keep nav link labels identical to desktop for tests and consistency */}
                 <div className="flex flex-col gap-3 items-start">
                   {navLinks.map(({ href, label }) => {
                     const active = isActive(href);
+                    if (href === '/brands' && brandNavLinks.length > 0) {
+                      return (
+                        <div key={href} className="flex w-full flex-col gap-2 items-start">
+                          <Link
+                            href={href}
+                            aria-current={active ? 'page' : undefined}
+                            className={`${linkClass(active)} self-start whitespace-nowrap text-base md:text-lg`}
+                            onClick={() => setMenuOpen(false)}
+                          >
+                            {label}
+                          </Link>
+                          <ul className="w-full border-l border-red-800 pl-3 flex flex-col gap-2" aria-label="Brand links">
+                            {brandNavLinks.map((b) => (
+                              <li key={b._id}>
+                                <a
+                                  href={b.url}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="dp-link block whitespace-normal text-base"
+                                  onClick={() => setMenuOpen(false)}
+                                >
+                                  {b.text}
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      );
+                    }
                     return (
                       <Link
                         key={href}
                         href={href}
                         aria-current={active ? 'page' : undefined}
-                        className={`${active ? 'text-red-600 no-underline hover:text-red-600 focus:text-red-600' : 'dp-link'} self-start whitespace-nowrap text-base md:text-lg`}
+                        className={`${linkClass(active)} self-start whitespace-nowrap text-base md:text-lg`}
                         onClick={() => setMenuOpen(false)}
                       >
                         {label}
@@ -135,7 +205,7 @@ export function Navigation() {
                   })}
                   <a
                     href="https://shop.dragonspurr.ca"
-                    className={`dp-link self-start whitespace-nowrap text-base`}
+                    className="dp-link self-start whitespace-nowrap text-base"
                     {...externalLinkAttributes}
                     onClick={() => setMenuOpen(false)}
                   >
