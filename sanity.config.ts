@@ -6,6 +6,7 @@
 
 import { dashboardTool } from "@sanity/dashboard";
 import { vercelWidget } from "sanity-plugin-dashboard-widget-vercel";
+import { umamiTool } from 'sanity-plugin-umami-analytics-tool'
 import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
@@ -26,6 +27,9 @@ export default defineConfig({
       widgets: [
         vercelWidget(),
       ],
+    }),
+    umamiTool({
+      url: 'https://cloud.umami.is/share/BKeEDq4lp27Fe1Uv',
     }),
   ],
 });
