@@ -1,5 +1,5 @@
 import type { HttpTypes } from '@medusajs/types';
-import { isMedusaConfigured, sdk } from '@/app/lib/medusa';
+import { formatMedusaError, isMedusaConfigured, sdk } from '@/app/lib/medusa';
 import { getDefaultRegionId } from '@/app/lib/medusa-region';
 
 export {
@@ -35,13 +35,10 @@ export async function listShopCategories(): Promise<ShopCategoryNavItem[]> {
   if (!isMedusaConfigured()) return [];
 
   try {
-    const { product_categories } = await sdk.store.category.list(
-      {
-        limit: 100,
-        fields: 'id,name,handle',
-      },
-      { next: { tags: ['shop-categories'] } }
-    );
+    const { product_categories } = await sdk.store.category.list({
+      limit: 100,
+      fields: 'id,name,handle',
+    });
 
     return (product_categories ?? [])
       .sort((a, b) => a.name.localeCompare(b.name))
@@ -72,9 +69,11 @@ export async function retrieveShopCategoryByHandle(handle: string): Promise<Shop
     }
     return { ok: true, category };
   } catch (err) {
-    const message =
-      err instanceof Error ? err.message : 'Failed to load category from Medusa.';
-    return { ok: false, code: 'api_error', error: message };
+    return {
+      ok: false,
+      code: 'api_error',
+      error: formatMedusaError(err, 'Failed to load category from Medusa.'),
+    };
   }
 }
 
@@ -87,7 +86,7 @@ export async function listShopProducts(
       ok: false,
       code: 'missing_config',
       error:
-        'Medusa is not configured. Add NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY to your environment (create one in Medusa Admin → Settings → Publishable API Keys).',
+        'Medusa is not configured. Add MEDUSA_PUBLISHABLE_KEY (or NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY) to your environment (create one in Medusa Admin → Settings → Publishable API Keys).',
     };
   }
 
@@ -101,27 +100,20 @@ export async function listShopProducts(
       };
     }
 
-    const { products, count } = await sdk.store.product.list(
-      {
-        limit,
-        region_id: regionId,
-        ...(categoryId ? { category_id: categoryId } : {}),
-        fields: '*variants.calculated_price',
-      },
-      {
-        next: {
-          tags: categoryId
-            ? ['shop-products', `shop-products-${regionId}`, `shop-category-${categoryId}`]
-            : ['shop-products', `shop-products-${regionId}`],
-        },
-      }
-    );
+    const { products, count } = await sdk.store.product.list({
+      limit,
+      region_id: regionId,
+      ...(categoryId ? { category_id: categoryId } : {}),
+      fields: '*variants.calculated_price',
+    });
 
     return { ok: true, products, count, regionId };
   } catch (err) {
-    const message =
-      err instanceof Error ? err.message : 'Failed to load products from Medusa.';
-    return { ok: false, code: 'api_error', error: message };
+    return {
+      ok: false,
+      code: 'api_error',
+      error: formatMedusaError(err, 'Failed to load products from Medusa.'),
+    };
   }
 }
 
@@ -136,7 +128,7 @@ export async function retrieveShopProduct(
       ok: false,
       code: 'missing_config',
       error:
-        'Medusa is not configured. Add NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY to your environment.',
+        'Medusa is not configured. Add MEDUSA_PUBLISHABLE_KEY (or NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY) to your environment.',
     };
   }
 
@@ -164,8 +156,10 @@ export async function retrieveShopProduct(
 
     return { ok: true, product, regionId };
   } catch (err) {
-    const message =
-      err instanceof Error ? err.message : 'Failed to load product from Medusa.';
-    return { ok: false, code: 'api_error', error: message };
+    return {
+      ok: false,
+      code: 'api_error',
+      error: formatMedusaError(err, 'Failed to load product from Medusa.'),
+    };
   }
 }
