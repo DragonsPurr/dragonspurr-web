@@ -2,6 +2,13 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
+import { BoxIconHoverButton } from '@/components/icons/BoxIconHoverButton';
+import {
+  boxiconsArrowBigLeft,
+  boxiconsArrowBigLeftFilled,
+  boxiconsArrowBigRight,
+  boxiconsArrowBigRightFilled,
+} from '@/components/icons/boxicons-cart';
 
 const PHOTOS_PER_PAGE = 18;
 
@@ -135,28 +142,26 @@ export default function Portfolio() {
           className="mt-8 flex flex-wrap items-center justify-center gap-4"
           aria-label="Portfolio pagination"
         >
-          <button
-            type="button"
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
+          <BoxIconHoverButton
+            icon={boxiconsArrowBigLeft}
+            filledIcon={boxiconsArrowBigLeftFilled}
+            label="Previous page"
             disabled={!hasPrev}
-            className="dp-form-button"
-            aria-label="Previous page"
-          >
-            Previous
-          </button>
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            iconSize="2.25rem"
+          />
           <span className="font-cormorant_garamond text-xl text-white">
             Page {data.page} of {data.pages}
             {data.total > 0 && ` (${data.total} photos)`}
           </span>
-          <button
-            type="button"
-            onClick={() => setPage((p) => Math.min(data.pages, p + 1))}
+          <BoxIconHoverButton
+            icon={boxiconsArrowBigRight}
+            filledIcon={boxiconsArrowBigRightFilled}
+            label="Next page"
             disabled={!hasNext}
-            className="dp-form-button"
-            aria-label="Next page"
-          >
-            Next
-          </button>
+            onClick={() => setPage((p) => Math.min(data.pages, p + 1))}
+            iconSize="2.25rem"
+          />
         </nav>
       )}
 
@@ -186,24 +191,30 @@ export default function Portfolio() {
               ×
             </button>
             {hasPrevPhoto && (
-              <button
-                type="button"
-                onClick={(e) => { e.stopPropagation(); goToPrev(); }}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center text-white bg-black/60 hover:bg-red-800 rounded-r-md text-2xl font-bold"
-                aria-label="Previous image"
-              >
-                ‹
-              </button>
+              <BoxIconHoverButton
+                icon={boxiconsArrowBigLeft}
+                filledIcon={boxiconsArrowBigLeftFilled}
+                label="Previous image"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goToPrev();
+                }}
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-black/60 rounded-r-md"
+                iconSize="2.25rem"
+              />
             )}
             {hasNextPhoto && (
-              <button
-                type="button"
-                onClick={(e) => { e.stopPropagation(); goToNext(); }}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center text-white bg-black/60 hover:bg-red-800 rounded-l-md text-2xl font-bold"
-                aria-label="Next image"
-              >
-                ›
-              </button>
+              <BoxIconHoverButton
+                icon={boxiconsArrowBigRight}
+                filledIcon={boxiconsArrowBigRightFilled}
+                label="Next image"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goToNext();
+                }}
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-black/60 rounded-l-md"
+                iconSize="2.25rem"
+              />
             )}
             <div className="relative flex-1 min-h-0 rounded-lg overflow-hidden bg-gray-900">
               <Image

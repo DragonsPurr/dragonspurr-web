@@ -15,8 +15,10 @@ const externalLinkAttributes = { target: "_blank", rel: "noreferrer" as const };
 const siteInfo = {
   name: "Dragon's Purr Crafts and Sundry",
   url: "https://dragonspurr.ca",
-  email: "info@dragonspurr.ca",
-  phone: "+1 (416) 555-1234",
+  productSupportEmail: "productsupport@dragonspurr.ca",
+  generalInquiryEmail: "info@dragonspurr.ca",
+  billingInquiryEmail: "billing@dragonspurr.ca",
+  phone: "+1 (289) 269-2529",
   address: "608-26 Carluke Crescent, Toronto, ON M2L 2J2",
   hours: "Monday - Friday: 9:00 AM - 5:00 PM",
   description: "Dragon's Purr Crafts and Sundry is a Toronto-Based Creative Duo that makes things",

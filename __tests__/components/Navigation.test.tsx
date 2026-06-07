@@ -24,14 +24,12 @@ describe('Navigation', () => {
     expect(screen.getByRole('link', { name: /about/i })).toHaveAttribute('href', '/about');
     expect(screen.getByRole('link', { name: /blog/i })).toHaveAttribute('href', '/blog');
     expect(screen.getByRole('link', { name: /contact/i })).toHaveAttribute('href', '/contact');
-    expect(screen.getByRole('link', { name: /shop/i })).toHaveAttribute('href', 'https://shop.dragonspurr.ca');
+    expect(screen.getByRole('link', { name: /shop/i })).toHaveAttribute('href', '/shop');
   });
 
-  it('Shop link opens in new tab', () => {
+  it('Shop link is an internal route (not external)', () => {
     render(<Navigation />);
     const shopLink = screen.getByRole('link', { name: /shop/i });
-    expect(shopLink).toHaveAttribute('href', 'https://shop.dragonspurr.ca');
-    expect(shopLink).toHaveAttribute('target', '_blank');
-    expect(shopLink).toHaveAttribute('rel', 'noreferrer');
+    expect(shopLink).not.toHaveAttribute('target', '_blank');
   });
 });

@@ -43,7 +43,7 @@ body {
   }
 
   .dp-nav-item {
-    @apply flex flex-wrap justify-end gap-2 md:gap-4 font-cinzel text-white text-lg md:text-3xl;
+    @apply flex flex-wrap justify-end gap-2 md:gap-3 font-cinzel text-white text-base md:text-xl;
   }
 
   .dp-form-label {
@@ -52,6 +52,11 @@ body {
 
   .dp-form-input {
     @apply w-full font-cormorant_garamond text-lg px-3 py-2 rounded-md border border-[var(--dp-gray-600)] bg-[var(--dp-bkgd-color)] text-white;
+  }
+
+  .dp-form-select {
+    @apply dp-form-input appearance-none bg-[length:1rem] bg-[right_0.5rem_center] bg-no-repeat pr-9;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23fff' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
   }
 
   .dp-form-button {
@@ -128,4 +133,21 @@ body {
 }
 .img-red-600:hover {
   filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(114%) contrast(97%);
+}
+
+/* Google Places Autocomplete (PlaceAutocompleteElement) */
+.address-place-autocomplete-host {
+  display: block;
+  width: 100%;
+}
+
+.address-place-autocomplete-host .dp-place-autocomplete,
+.address-place-autocomplete-host gmp-place-autocomplete {
+  width: 100%;
+  color-scheme: dark;
+}
+
+/* Legacy Autocomplete dropdown (if ever used) */
+.pac-container {
+  z-index: 10000;
 }

@@ -22,7 +22,22 @@ beforeAll(() => {
   global.fetch = mockFetch as typeof fetch;
 });
 
-const VALID_INTERNAL_PATHS = ['/', '/about', '/brands', '/blog', '/portfolio', '/contact'];
+const VALID_INTERNAL_PATHS = [
+  '/',
+  '/about',
+  '/brands',
+  '/blog',
+  '/portfolio',
+  '/shop',
+  '/shop/account',
+  '/shop/orders',
+  '/shop/cart',
+  '/shop/login',
+  '/shop/signup',
+  '/shop/checkout',
+  '/contact',
+  '/privacy',
+];
 
 function getAllLinks(container: HTMLElement): HTMLAnchorElement[] {
   return Array.from(container.querySelectorAll('a[href]'));
@@ -53,7 +68,11 @@ describe('All links have valid hrefs', () => {
     expect(hrefs.length).toBeGreaterThan(0);
     hrefs.forEach((href) => {
       expect(href).toBeTruthy();
-      expect(href).toMatch(/^https?:\/\//);
+      if (href.startsWith('/')) {
+        expect(VALID_INTERNAL_PATHS).toContain(href);
+      } else {
+        expect(href).toMatch(/^https?:\/\//);
+      }
     });
   });
 
@@ -67,13 +86,13 @@ describe('All links have valid hrefs', () => {
     });
   });
 
-  it('Contact page social links have valid hrefs', () => {
+  it('Contact page links have valid hrefs', () => {
     const { container } = render(<Contact />);
     const hrefs = getLinkHrefs(container);
-    expect(hrefs.length).toBeGreaterThanOrEqual(3);
+    expect(hrefs.length).toBeGreaterThanOrEqual(2);
     hrefs.forEach((href) => {
       expect(href).toBeTruthy();
-      expect(href).toMatch(/^https?:\/\//);
+      expect(href).toMatch(/^(https?:\/\/|tel:|mailto:)/);
     });
   });
 
@@ -116,7 +135,7 @@ describe('All expected links are present and resolve to correct targets', () => 
     expect(hrefs).toContain('/blog');
     expect(hrefs).toContain('/portfolio');
     expect(hrefs).toContain('/contact');
-    expect(hrefs).toContain('https://shop.dragonspurr.ca');
+    expect(hrefs).toContain('/shop');
   });
 
   it('Footer contains expected external links', () => {
@@ -124,6 +143,7 @@ describe('All expected links are present and resolve to correct targets', () => 
     const hrefs = getLinkHrefs(container);
     expect(hrefs.filter((h) => h === 'https://dragonspurr.ca').length).toBe(1);
     expect(hrefs.filter((h) => h === 'https://boxingoctop.us').length).toBe(1);
+    expect(hrefs).toContain('/privacy');
   });
 
   it('Brands page links resolve to expected brand URLs', () => {
@@ -133,11 +153,10 @@ describe('All expected links are present and resolve to correct targets', () => 
     expect(hrefs).toContain('https://hipsterdonut.myspreadshop.ca');
   });
 
-  it('Contact page social links resolve to expected URLs', () => {
+  it('Contact page links resolve to expected targets', () => {
     const { container } = render(<Contact />);
     const hrefs = getLinkHrefs(container);
-    expect(hrefs).toContain('https://bsky.app/profile/dragonspurr.bsky.social');
-    expect(hrefs).toContain('https://hey.cafe/@dragonspurr');
-    expect(hrefs).toContain('https://ehnw.ca/u/dragonspurr');
+    expect(hrefs.some((href) => href.startsWith('tel:'))).toBe(true);
+    expect(hrefs.some((href) => href.startsWith('mailto:info@dragonspurr.ca'))).toBe(true);
   });
 });

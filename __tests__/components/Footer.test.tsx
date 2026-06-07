@@ -19,4 +19,9 @@ describe('Footer', () => {
     render(<Footer />);
     expect(screen.getByRole('link', { name: /boxing octopus creative/i })).toHaveAttribute('target', '_blank');
   });
+
+  it('renders Privacy Policy link', () => {
+    render(<Footer />);
+    expect(screen.getByRole('link', { name: /privacy policy/i })).toHaveAttribute('href', '/privacy');
+  });
 });

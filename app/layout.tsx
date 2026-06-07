@@ -1,6 +1,11 @@
 import Script from 'next/script';
 import { LayoutSwitcher } from './LayoutSwitcher';
 import { getBrandNavLinks } from './lib/brands';
+import { getCustomerAvatarProxyUrl } from './lib/customer-avatar';
+import { getCustomerDisplayName } from './lib/customer-display';
+import { retrieveLoggedInCustomer } from './lib/medusa-auth';
+import { getShopCartNavPreview } from './lib/medusa-cart';
+import { listShopCategories } from './lib/shop';
 import { logoTypes, siteInfo } from './lib/constants';
 import {
   Cinzel_Decorative,
@@ -56,7 +61,12 @@ export const UmamiAnalytics = () => {
 };
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
-  const brandNavLinks = await getBrandNavLinks();
+  const [brandNavLinks, shopCategories, cart, customer] = await Promise.all([
+    getBrandNavLinks(),
+    listShopCategories(),
+    getShopCartNavPreview(),
+    retrieveLoggedInCustomer(),
+  ]);
 
   return (
     <html
@@ -76,7 +86,16 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       </head>
       <body className="bg-black text-white min-h-screen flex flex-col">
         <UmamiAnalytics />
-        <LayoutSwitcher brandNavLinks={brandNavLinks}>{children}</LayoutSwitcher>
+        <LayoutSwitcher
+          brandNavLinks={brandNavLinks}
+          shopCategories={shopCategories}
+          cart={cart}
+          isCustomerLoggedIn={customer != null}
+          customerDisplayName={customer ? getCustomerDisplayName(customer) : null}
+          customerAvatarUrl={customer ? getCustomerAvatarProxyUrl(customer) : null}
+        >
+          {children}
+        </LayoutSwitcher>
       </body>
     </html>
   );

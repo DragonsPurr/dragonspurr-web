@@ -1,7 +1,7 @@
 'use client';
 
 import type { BrandNavItem } from '@/app/lib/brands';
-import { externalLinkAttributes, logoTypes } from '@/app/lib/constants';
+import { logoTypes } from '@/app/lib/constants';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -13,14 +13,17 @@ const navLinks = [
   { href: '/brands', label: 'Brands' },
   { href: '/blog', label: 'Blog' },
   { href: '/portfolio', label: 'Portfolio' },
+  { href: '/shop', label: 'Shop' },
   { href: '/contact', label: 'Contact' },
 ];
 
 type NavigationProps = {
   brandNavLinks?: BrandNavItem[];
+  /** When true, sticky positioning is handled by a parent header (e.g. shop sub-nav). */
+  embedded?: boolean;
 };
 
-export function Navigation({ brandNavLinks = [] }: NavigationProps) {
+export function Navigation({ brandNavLinks = [], embedded = false }: NavigationProps) {
   const pathname = usePathname();
   const [isMobile, setIsMobile] = useState(() => {
     if (typeof window === 'undefined') return false;
@@ -34,15 +37,8 @@ export function Navigation({ brandNavLinks = [] }: NavigationProps) {
     const mq = window.matchMedia('(max-width: 1023px)');
     const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
 
-    if (typeof mq.addEventListener === 'function') {
-      mq.addEventListener('change', onChange);
-      return () => mq.removeEventListener('change', onChange);
-    }
-
-    if (typeof mq.addListener === 'function' && typeof mq.removeListener === 'function') {
-      mq.addListener(onChange);
-      return () => mq.removeListener(onChange);
-    }
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
   }, []);
 
   useEffect(() => {
@@ -78,7 +74,13 @@ export function Navigation({ brandNavLinks = [] }: NavigationProps) {
             </span>
           </Link>
           <div
-            className="pointer-events-none absolute left-0 top-full z-[60] pt-1 opacity-0 invisible transition-opacity duration-150 group-hover:pointer-events-auto group-hover:opacity-100 group-hover:visible group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-focus-within:visible"
+            className="pointer-events-none absolute left-0 top-full z-[60] 
+                       pt-1 opacity-0 invisible transition-opacity 
+                       duration-150 group-hover:pointer-events-auto 
+                       group-hover:opacity-100 group-hover:visible 
+                       group-focus-within:pointer-events-auto 
+                       group-focus-within:opacity-100 
+                       group-focus-within:visible whitespace-nowrap"
           >
             <ul
               role="menu"
@@ -92,7 +94,7 @@ export function Navigation({ brandNavLinks = [] }: NavigationProps) {
                     href={b.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="block whitespace-normal px-4 py-2 font-cinzel text-base md:text-xl dp-link"
+                    className="block whitespace-normal px-4 py-2 font-cinzel text-xs md:text-sm dp-link"
                   >
                     {b.text}
                   </a>
@@ -116,17 +118,14 @@ export function Navigation({ brandNavLinks = [] }: NavigationProps) {
     );
   };
 
-  const navLinksContent = (
-    <>
-      {navLinks.map(({ href, label }) => renderNavLink(href, label))}
-      <a href="https://shop.dragonspurr.ca" className="dp-link" {...externalLinkAttributes}>
-        Shop
-      </a>
-    </>
-  );
+  const navLinksContent = <>{navLinks.map(({ href, label }) => renderNavLink(href, label))}</>;
 
   return (
-    <nav className="bg-black w-full flex justify-center pt-2.5 md:pr-[100px] sticky top-0 z-50 border-b-2 border-red-800 pb-2 px-3 md:px-0">
+    <nav
+      className={`bg-black w-full flex justify-center pt-2.5 md:pr-[100px] pb-2 px-3 md:px-0 ${
+        embedded ? '' : 'sticky top-0 z-50 border-b-2 border-red-800'
+      }`}
+    >
       <div className="w-full max-w-7xl flex items-center justify-between gap-3 md:gap-6">
         <Link href="/" className="flex items-center">
           <Image
@@ -168,7 +167,7 @@ export function Navigation({ brandNavLinks = [] }: NavigationProps) {
                           <Link
                             href={href}
                             aria-current={active ? 'page' : undefined}
-                            className={`${linkClass(active)} self-start whitespace-nowrap text-base md:text-lg`}
+                            className={`${linkClass(active)} self-start whitespace-nowrap text-sm md:text-base`}
                             onClick={() => setMenuOpen(false)}
                           >
                             {label}
@@ -180,7 +179,7 @@ export function Navigation({ brandNavLinks = [] }: NavigationProps) {
                                   href={b.url}
                                   target="_blank"
                                   rel="noreferrer"
-                                  className="dp-link block whitespace-normal text-base"
+                                  className="dp-link block whitespace-normal text-xs"
                                   onClick={() => setMenuOpen(false)}
                                 >
                                   {b.text}
@@ -196,21 +195,13 @@ export function Navigation({ brandNavLinks = [] }: NavigationProps) {
                         key={href}
                         href={href}
                         aria-current={active ? 'page' : undefined}
-                        className={`${linkClass(active)} self-start whitespace-nowrap text-base md:text-lg`}
+                        className={`${linkClass(active)} self-start whitespace-nowrap text-sm md:text-base`}
                         onClick={() => setMenuOpen(false)}
                       >
                         {label}
                       </Link>
                     );
                   })}
-                  <a
-                    href="https://shop.dragonspurr.ca"
-                    className="dp-link self-start whitespace-nowrap text-base"
-                    {...externalLinkAttributes}
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    Shop
-                  </a>
                 </div>
               </div>
             )}
