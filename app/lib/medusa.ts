@@ -15,10 +15,63 @@ export const medusaPublishableKey = readEnv(
   'NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY'
 );
 
+/** Cloudflare rejects inbound requests that carry these reserved headers (error 1000 → 403). */
+export const CLOUDFLARE_HEADERS_TO_STRIP = [
+  'cf-connecting-ip',
+  'cf-ipcountry',
+  'cf-visitor',
+  'cf-ray',
+] as const;
+
+export function stripCloudflareHeadersFromInit(
+  init?: RequestInit
+): RequestInit | undefined {
+  if (!init?.headers) {
+    return init;
+  }
+
+  const headers = new Headers(init.headers);
+  for (const name of CLOUDFLARE_HEADERS_TO_STRIP) {
+    headers.delete(name);
+  }
+
+  return { ...init, headers };
+}
+
+function patchGlobalFetchForMedusaOrigin(origin: string): void {
+  if (typeof globalThis.fetch !== 'function') return;
+
+  const marker = '__dragonspurrMedusaFetchPatched__';
+  const globalRef = globalThis as typeof globalThis & { [marker]?: boolean };
+  if (globalRef[marker]) return;
+  globalRef[marker] = true;
+
+  const nativeFetch = globalThis.fetch.bind(globalThis);
+  globalThis.fetch = (input: RequestInfo | URL, init?: RequestInit) => {
+    const url =
+      typeof input === 'string'
+        ? input
+        : input instanceof URL
+          ? input.href
+          : input.url;
+
+    if (url.startsWith(origin)) {
+      return nativeFetch(input, stripCloudflareHeadersFromInit(init));
+    }
+
+    return nativeFetch(input, init);
+  };
+}
+
+patchGlobalFetchForMedusaOrigin(new URL(MEDUSA_BACKEND_URL).origin);
+
 export const sdk = new Medusa({
   baseUrl: MEDUSA_BACKEND_URL,
   debug: process.env.NODE_ENV === 'development',
   publishableKey: medusaPublishableKey,
+  globalHeaders: Object.fromEntries(
+    CLOUDFLARE_HEADERS_TO_STRIP.map((name) => [name, null])
+  ),
   auth: {
     type: 'jwt',
     jwtTokenStorageMethod: 'memory',
@@ -37,8 +90,9 @@ export function formatMedusaError(err: unknown, fallback: string): string {
   if (err instanceof FetchError) {
     if (err.status === 403) {
       return (
-        'Medusa rejected this request (403 Forbidden). Confirm MEDUSA_PUBLISHABLE_KEY is set in ' +
-        'production, linked to your sales channel in Medusa Admin, and redeploy after updating env vars.'
+        'Cloudflare blocked the Medusa API request (403 Forbidden). This usually happens when ' +
+        'Vercel forwards Cloudflare headers to shopadmin.dragonspurr.ca. Redeploy with the latest ' +
+        'code, or add a Cloudflare WAF skip rule for /store/* server-to-server traffic.'
       );
     }
     if (err.status === 400 && err.message.includes('publishable')) {

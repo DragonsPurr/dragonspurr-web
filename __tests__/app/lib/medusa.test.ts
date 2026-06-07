@@ -19,7 +19,38 @@ jest.mock('@medusajs/js-sdk', () => {
 });
 
 import { FetchError } from '@medusajs/js-sdk';
-import { formatMedusaError } from '@/app/lib/medusa';
+import {
+  CLOUDFLARE_HEADERS_TO_STRIP,
+  formatMedusaError,
+  stripCloudflareHeadersFromInit,
+} from '@/app/lib/medusa';
+
+describe('stripCloudflareHeadersFromInit', () => {
+  it('removes Cloudflare reserved headers from outbound requests', () => {
+    const init = stripCloudflareHeadersFromInit({
+      headers: {
+        accept: 'application/json',
+        'cf-connecting-ip': '76.76.21.21',
+        'cf-ray': 'abc123',
+        'x-publishable-api-key': 'pk_test',
+      },
+    });
+
+    const headers = new Headers(init?.headers);
+    expect(headers.get('accept')).toBe('application/json');
+    expect(headers.get('x-publishable-api-key')).toBe('pk_test');
+    for (const name of CLOUDFLARE_HEADERS_TO_STRIP) {
+      expect(headers.has(name)).toBe(false);
+    }
+  });
+
+  it('returns init unchanged when there are no headers', () => {
+    expect(stripCloudflareHeadersFromInit(undefined)).toBeUndefined();
+    expect(stripCloudflareHeadersFromInit({ cache: 'no-store' })).toEqual({
+      cache: 'no-store',
+    });
+  });
+});
 
 describe('formatMedusaError', () => {
   it('returns actionable guidance for 403 responses', () => {
@@ -27,9 +58,7 @@ describe('formatMedusaError', () => {
     expect(formatMedusaError(err, 'Failed to load products from Medusa.')).toContain(
       '403 Forbidden'
     );
-    expect(formatMedusaError(err, 'Failed to load products from Medusa.')).toContain(
-      'MEDUSA_PUBLISHABLE_KEY'
-    );
+    expect(formatMedusaError(err, 'Failed to load products from Medusa.')).toContain('Cloudflare');
   });
 
   it('returns the Medusa message for publishable key errors', () => {
