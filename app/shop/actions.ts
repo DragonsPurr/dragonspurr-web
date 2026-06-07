@@ -147,7 +147,7 @@ async function requireCustomerHeaders(): Promise<
 
 function customerAddressToCartShipping(
   address: HttpTypes.StoreCustomerAddress
-): NonNullable<HttpTypes.StoreCart['shipping_address']> {
+): NonNullable<Exclude<HttpTypes.StoreUpdateCart['shipping_address'], string>> {
   return {
     first_name: address.first_name ?? '',
     last_name: address.last_name ?? undefined,
@@ -749,9 +749,7 @@ export async function getCheckoutData() {
   }
   const regionId = cart.region_id ?? (await getDefaultRegionId());
 
-  let shippingOptions: Awaited<
-    ReturnType<typeof sdk.store.fulfillment.listCartOptions>
-  >['shipping_options'] = [];
+  let shippingOptions: HttpTypes.StoreCartShippingOption[] = [];
   let paymentProviders: Awaited<
     ReturnType<typeof sdk.store.payment.listPaymentProviders>
   >['payment_providers'] = [];

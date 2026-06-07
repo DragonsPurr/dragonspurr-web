@@ -10,6 +10,60 @@ import NotFound from '@/app/not-found';
 
 jest.mock('sweetalert2', () => ({ __esModule: true, default: { fire: jest.fn() } }));
 
+jest.mock('@/app/lib/brands', () => ({
+  getBrands: jest.fn(),
+}));
+
+jest.mock('@/app/lib/sanity', () => ({
+  isSanityConfigured: jest.fn(() => true),
+  urlFor: jest.fn(() => ({
+    width: () => ({
+      auto: () => ({
+        url: () => 'https://example.com/brand-image.jpg',
+      }),
+    }),
+  })),
+}));
+
+const { getBrands } = jest.requireMock<{ getBrands: jest.Mock }>('@/app/lib/brands');
+
+const mockBrands = [
+  {
+    _id: 'brand-1',
+    displayOrder: 1,
+    brandTitle: { text: "Dragon's Purr Crafts and Sundry", url: 'https://dragonspurr.ca' },
+    brandDescription: [
+      {
+        _key: 'desc-1',
+        _type: 'block',
+        children: [{ _key: 'span-1', _type: 'span', text: 'Main brand description.' }],
+      },
+    ],
+    brandImage: {
+      asset: { _ref: 'image-1' },
+      alt: "Dragon's Purr Crafts and Sundry",
+      url: 'https://dragonspurr.ca',
+    },
+  },
+  {
+    _id: 'brand-2',
+    displayOrder: 2,
+    brandTitle: { text: 'Hipster Donut Apparel', url: 'https://hipsterdonut.myspreadshop.ca' },
+    brandDescription: [
+      {
+        _key: 'desc-2',
+        _type: 'block',
+        children: [{ _key: 'span-2', _type: 'span', text: 'Donut apparel description.' }],
+      },
+    ],
+    brandImage: {
+      asset: { _ref: 'image-2' },
+      alt: 'Hipster Donut Apparel',
+      url: 'https://hipsterdonut.myspreadshop.ca',
+    },
+  },
+];
+
 const mockFetch = (url: string) => {
   if (url.startsWith('/api/portfolio'))
     return Promise.resolve({
@@ -20,6 +74,7 @@ const mockFetch = (url: string) => {
 };
 beforeAll(() => {
   global.fetch = mockFetch as typeof fetch;
+  getBrands.mockResolvedValue(mockBrands);
 });
 
 const VALID_INTERNAL_PATHS = [
@@ -76,8 +131,8 @@ describe('All links have valid hrefs', () => {
     });
   });
 
-  it('Brands page brand links have valid hrefs', () => {
-    const { container } = render(<Brands />);
+  it('Brands page brand links have valid hrefs', async () => {
+    const { container } = render(await Brands());
     const hrefs = getLinkHrefs(container);
     expect(hrefs.length).toBeGreaterThanOrEqual(2);
     hrefs.forEach((href) => {
@@ -146,8 +201,8 @@ describe('All expected links are present and resolve to correct targets', () => 
     expect(hrefs).toContain('/privacy');
   });
 
-  it('Brands page links resolve to expected brand URLs', () => {
-    const { container } = render(<Brands />);
+  it('Brands page links resolve to expected brand URLs', async () => {
+    const { container } = render(await Brands());
     const hrefs = getLinkHrefs(container);
     expect(hrefs).toContain('https://dragonspurr.ca');
     expect(hrefs).toContain('https://hipsterdonut.myspreadshop.ca');

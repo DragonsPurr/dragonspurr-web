@@ -56,6 +56,6 @@ describe('Shop page', () => {
     render(await ShopPage());
     expect(screen.getByRole('heading', { name: /shop/i, level: 1 })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /dragon mug/i })).toHaveAttribute('href', '/shop/dragon-mug');
-    expect(screen.getByText('$19.99')).toBeInTheDocument();
+    expect(screen.getByText('US$19.99')).toBeInTheDocument();
   });
 });

@@ -42,8 +42,8 @@ export default function PrivacyPage() {
               online shop
             </Link>
             . We are a Canadian business. If you have questions about privacy, email us at{' '}
-            <a href={`mailto:${siteInfo.email}`} className="dp-link">
-              {siteInfo.email}
+            <a href={`mailto:${siteInfo.generalInquiryEmail}`} className="dp-link">
+              {siteInfo.generalInquiryEmail}
             </a>
             .
           </p>
@@ -138,8 +138,8 @@ export default function PrivacyPage() {
           </p>
           <p>
             To make a request, email{' '}
-            <a href={`mailto:${siteInfo.email}`} className="dp-link">
-              {siteInfo.email}
+            <a href={`mailto:${siteInfo.generalInquiryEmail}`} className="dp-link">
+              {siteInfo.generalInquiryEmail}
             </a>
             . If you need to change your shop password or account details and cannot do it yourself, contact us and we
             will help.
@@ -167,8 +167,8 @@ export default function PrivacyPage() {
             {siteInfo.address}
             <br />
             Email:{' '}
-            <a href={`mailto:${siteInfo.email}`} className="dp-link">
-              {siteInfo.email}
+            <a href={`mailto:${siteInfo.generalInquiryEmail}`} className="dp-link">
+              {siteInfo.generalInquiryEmail}
             </a>
           </p>
         </PolicySection>
