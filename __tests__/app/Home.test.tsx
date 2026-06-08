@@ -20,6 +20,9 @@ describe('Home page', () => {
   it('logo has correct src', () => {
     render(<Home />);
     const img = screen.getByRole('img', { name: /dragon's purr crafts and sundry logo/i });
-    expect(img).toHaveAttribute('src', expect.stringContaining('square-logo-for-dark-bkgds.png'));
+    expect(img).toHaveAttribute(
+      'src',
+      expect.stringContaining('dragonspurr_square-for-dark-bg.png'),
+    );
   });
 });

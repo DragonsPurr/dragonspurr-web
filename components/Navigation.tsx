@@ -25,18 +25,16 @@ type NavigationProps = {
 
 export function Navigation({ brandNavLinks = [], embedded = false }: NavigationProps) {
   const pathname = usePathname();
-  const [isMobile, setIsMobile] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    return window.innerWidth < 1024;
-  });
+  const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return;
+    if (typeof window.matchMedia !== 'function') return;
 
     const mq = window.matchMedia('(max-width: 1023px)');
     const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
 
+    setIsMobile(mq.matches);
     mq.addEventListener('change', onChange);
     return () => mq.removeEventListener('change', onChange);
   }, []);
@@ -134,6 +132,7 @@ export function Navigation({ brandNavLinks = [], embedded = false }: NavigationP
             className="w-36 sm:w-44 md:w-60 h-auto"
             width={400}
             height={400}
+            priority
           />
         </Link>
 

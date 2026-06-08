@@ -11,6 +11,7 @@ export default function Home() {
           className="w-full max-w-xs sm:max-w-sm md:max-w-md mt-8 md:mt-[100px]"
           width={400}
           height={400}
+          priority
         />
       </div>
       <div className="flex justify-center md:justify-end items-center font-cormorant_garamond text-3xl sm:text-4xl md:text-[40px] leading-tight md:leading-none mt-2 md:mt-[100px] px-2 md:px-0 text-center md:text-left">

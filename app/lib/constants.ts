@@ -1,14 +1,6 @@
-const envConfig = {
-  emailjs: {
-    serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-    templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
-    userId: process.env.NEXT_PUBLIC_EMAILJS_USER_ID,
-  },
-  googleAnalyticsId: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID,
-  logrocketId: process.env.NEXT_PUBLIC_LOGROCKET_ID,
-};
+import { buildSiteAssetUrl, SITE_ASSETS_PROXY_BASE } from './site-assets';
 
-const asset_base_url = "https://dp-assets.tor1.digitaloceanspaces.com";
+const asset_base_url = SITE_ASSETS_PROXY_BASE;
 
 const externalLinkAttributes = { target: "_blank", rel: "noreferrer" as const };
 
@@ -33,15 +25,15 @@ const socialMedia = {
 };
 
 const logoTypes = {
-  circular_white: `${asset_base_url}/brand/circular-logo-white.png`,
-  circular_black: `${asset_base_url}/brand/circular-logo.png`,
-  square: `${asset_base_url}/brand/square-logo.png`,
-  square_for_dark_bkgds: `${asset_base_url}/brand/square-logo-for-dark-bkgds.png`,
-  square_no_text: `${asset_base_url}/brand/square-logo-no-text.png`,
-  wide_for_dark_bkgds: `${asset_base_url}/brand/wide-logo-for-dark-bkgds.png`,
-  wide: `${asset_base_url}/brand/wide-logo.png`,
-  publication_banner: `${asset_base_url}/brand/publication-banner.png`,
-  hipsterdonut_logo: `${asset_base_url}/brand/hipsterdonut-logo-wide.png`,
+  circular_white: buildSiteAssetUrl('brand/dragonspurr_circle-white-bg.png'),
+  circular_black: buildSiteAssetUrl('brand/dragonspurr_circle-black-bg.png'),
+  square: buildSiteAssetUrl('brand/dragonspurr_square-for-light-bg.png'),
+  square_for_dark_bkgds: buildSiteAssetUrl('brand/dragonspurr_square-for-dark-bg.png'),
+  square_no_text: buildSiteAssetUrl('brand/dragonspurr_square-no-text.png'),
+  wide_for_dark_bkgds: buildSiteAssetUrl('brand/dragonspurr_wide-for-dark-bg.png'),
+  wide: buildSiteAssetUrl('brand/dragonspurr_wide-for-light-bg.png'),
+  publication_banner: buildSiteAssetUrl('brand/publication-banner.png'),
+  hipsterdonut_logo: buildSiteAssetUrl('brand/dragonspurr_hipsterdonut-logo-wide.png'),
 };
 
-export { asset_base_url, externalLinkAttributes, logoTypes, siteInfo, socialMedia, envConfig };
+export { asset_base_url, externalLinkAttributes, logoTypes, siteInfo, socialMedia };

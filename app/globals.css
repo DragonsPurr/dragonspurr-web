@@ -8,8 +8,6 @@
   --dp-dark-red: #991b1b;
   --dp-gray-800: #1f2937;
   --dp-gray-600: #4b5563;
-  /* Use with `background-image:` — `bg-[var(...)]` is compiled as background-color, not the image */
-  --dp-main-content-bg-image: url("https://dp-assets.tor1.digitaloceanspaces.com/brand/publication-banner.png");
 }
 
 html,

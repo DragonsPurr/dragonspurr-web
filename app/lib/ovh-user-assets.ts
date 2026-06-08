@@ -4,43 +4,21 @@ import {
   extensionForAvatarMime,
   isAllowedAvatarObjectKey,
 } from '@/app/lib/customer-avatar';
-import { GetObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import {
+  createOvhS3Client,
+  getOvhUserAssetsBucket,
+  isOvhUserAssetsConfigured,
+} from '@/app/lib/ovh-s3';
+import { GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3';
 
-function getOvhS3Config() {
-  const endpoint = process.env.OVH_USER_ASSETS_S3_ENDPOINT?.trim();
-  const bucket = process.env.OVH_USER_ASSETS_S3_BUCKET?.trim();
-  const region = process.env.OVH_USER_ASSETS_S3_REGION?.trim() || 'ca-east-tor';
-  const accessKeyId = process.env.OVH_USER_ASSETS_S3_ACCESS_KEY?.trim();
-  const secretAccessKey = process.env.OVH_USER_ASSETS_S3_SECRET_KEY?.trim();
-
-  return { endpoint, bucket, region, accessKeyId, secretAccessKey };
-}
-
-export function isOvhUserAssetsConfigured(): boolean {
-  const { endpoint, bucket, accessKeyId, secretAccessKey } = getOvhS3Config();
-  return Boolean(endpoint && bucket && accessKeyId && secretAccessKey);
-}
-
-function getOvhS3Client(): S3Client {
-  const { endpoint, region, accessKeyId, secretAccessKey } = getOvhS3Config();
-  if (!endpoint || !accessKeyId || !secretAccessKey) {
-    throw new Error('OVH user assets storage is not configured.');
-  }
-
-  return new S3Client({
-    region,
-    endpoint,
-    credentials: { accessKeyId, secretAccessKey },
-    forcePathStyle: false,
-  });
-}
+export { isOvhUserAssetsConfigured };
 
 export async function uploadCustomerAvatarToOvh(
   customerId: string,
   body: Uint8Array,
   contentType: string
 ): Promise<string> {
-  const { bucket } = getOvhS3Config();
+  const bucket = getOvhUserAssetsBucket();
   if (!bucket) {
     throw new Error('OVH user assets bucket is not configured.');
   }
@@ -51,7 +29,7 @@ export async function uploadCustomerAvatarToOvh(
   }
 
   const key = buildCustomerAvatarObjectKey(customerId, extension);
-  const client = getOvhS3Client();
+  const client = createOvhS3Client();
 
   const putInput = {
     Bucket: bucket,
@@ -77,12 +55,12 @@ export async function getOvhUserAsset(
     throw new Error('Invalid object key.');
   }
 
-  const { bucket } = getOvhS3Config();
+  const bucket = getOvhUserAssetsBucket();
   if (!bucket) {
     throw new Error('OVH user assets bucket is not configured.');
   }
 
-  const client = getOvhS3Client();
+  const client = createOvhS3Client();
   const response = await client.send(
     new GetObjectCommand({
       Bucket: bucket,

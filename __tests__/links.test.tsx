@@ -10,6 +10,10 @@ import NotFound from '@/app/not-found';
 
 jest.mock('sweetalert2', () => ({ __esModule: true, default: { fire: jest.fn() } }));
 
+jest.mock('@/app/lib/about', () => ({
+  getAboutPage: jest.fn(),
+}));
+
 jest.mock('@/app/lib/brands', () => ({
   getBrands: jest.fn(),
 }));
@@ -25,7 +29,35 @@ jest.mock('@/app/lib/sanity', () => ({
   })),
 }));
 
+const { getAboutPage } = jest.requireMock<{ getAboutPage: jest.Mock }>('@/app/lib/about');
 const { getBrands } = jest.requireMock<{ getBrands: jest.Mock }>('@/app/lib/brands');
+
+const mockAboutPage = {
+  heroImage: {
+    asset: { _ref: 'image-about' },
+    alt: 'Kayt and Ryan',
+  },
+  whoWeAre: {
+    heading: 'Who We Are',
+    content: [
+      {
+        _key: 'who-1',
+        _type: 'block',
+        children: [{ _key: 'who-span-1', _type: 'span', text: "Hi! We're Kayt and Ryan!" }],
+      },
+    ],
+  },
+  whatWeMake: {
+    heading: 'What We Make',
+    content: [
+      {
+        _key: 'what-1',
+        _type: 'block',
+        children: [{ _key: 'what-span-1', _type: 'span', text: 'Vinyl and more.' }],
+      },
+    ],
+  },
+};
 
 const mockBrands = [
   {
@@ -74,6 +106,7 @@ const mockFetch = (url: string) => {
 };
 beforeAll(() => {
   global.fetch = mockFetch as typeof fetch;
+  getAboutPage.mockResolvedValue(mockAboutPage);
   getBrands.mockResolvedValue(mockBrands);
 });
 
@@ -157,8 +190,8 @@ describe('All links have valid hrefs', () => {
     expect(links.length).toBe(0);
   });
 
-  it('About page has no links in content', () => {
-    const { container } = render(<About />);
+  it('About page has no links in content', async () => {
+    const { container } = render(await About());
     const links = getAllLinks(container);
     expect(links.length).toBe(0);
   });

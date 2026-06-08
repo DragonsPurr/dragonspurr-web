@@ -13,7 +13,7 @@ import {
   Cormorant_Garamond,
 } from 'next/font/google';
 import './globals.css';
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 const cinzelDecorative = Cinzel_Decorative({
   weight: ['400', '700', '900'],
@@ -72,6 +72,11 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     <html
       lang="en"
       className={`bg-black ${cinzelDecorative.variable} ${cinzel.variable} ${cormorant.variable}`}
+      style={
+        {
+          '--dp-main-content-bg-image': `url("${logoTypes.publication_banner}")`,
+        } as CSSProperties
+      }
     >
       <head>
         <script
