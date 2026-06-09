@@ -27,6 +27,11 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'dp-shop-assets.s3.ca-east-tor.io.cloud.ovh.net',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'upload.wikimedia.org',
         pathname: '/**',
       },
