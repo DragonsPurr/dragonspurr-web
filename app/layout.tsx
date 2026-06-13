@@ -1,4 +1,5 @@
 import Script from 'next/script';
+import { Analytics } from '@vercel/analytics/next';
 import { LayoutSwitcher } from './LayoutSwitcher';
 import { getBrandNavLinks } from './lib/brands';
 import { getCustomerAvatarProxyUrl } from './lib/customer-avatar';
@@ -101,6 +102,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         >
           {children}
         </LayoutSwitcher>
+        <Analytics />
       </body>
     </html>
   );
