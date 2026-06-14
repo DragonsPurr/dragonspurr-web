@@ -1,12 +1,13 @@
-import Script from 'next/script';
 import { Analytics } from '@vercel/analytics/next';
 import { LayoutSwitcher } from './LayoutSwitcher';
 import { getBrandNavLinks } from './lib/brands';
 import { getCustomerAvatarProxyUrl } from './lib/customer-avatar';
 import { getCustomerDisplayName } from './lib/customer-display';
 import { retrieveLoggedInCustomer } from './lib/medusa-auth';
-import { getShopCartNavPreview } from './lib/medusa-cart';
-import { listShopCategories } from './lib/shop';
+import { getShopCartNavPreview, type ShopCartNavPreview } from './lib/medusa-cart';
+import { getRequestPathname } from './lib/request-pathname';
+import { listShopCategories, type ShopCategoryNavItem } from './lib/shop';
+import type { HttpTypes } from '@medusajs/types';
 import { logoTypes, siteInfo } from './lib/constants';
 import {
   Cinzel_Decorative,
@@ -49,24 +50,44 @@ export const metadata = {
   },
 };
 
-export const UmamiAnalytics = () => {
-  const websiteId = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
-  if (!websiteId) {
-    return <></>;
-  }
-  return (
-    <>
-      <Script async src="https://umami.is/script.js" data-website-id={websiteId} />
-    </>
-  );
+function isStudioRoute(pathname: string): boolean {
+  return pathname.startsWith('/studio');
+}
+
+const emptyShopCartPreview: ShopCartNavPreview = {
+  itemCount: 0,
+  items: [],
+  total: null,
+  currencyCode: null,
 };
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
-  const [brandNavLinks, shopCategories, cart, customer] = await Promise.all([
-    getBrandNavLinks(),
-    listShopCategories(),
-    getShopCartNavPreview(),
-    retrieveLoggedInCustomer(),
+  const pathname = await getRequestPathname();
+
+  if (isStudioRoute(pathname)) {
+    return (
+      <html lang="en" className="h-full">
+        <body className="m-0 h-full overflow-hidden bg-white">{children}</body>
+      </html>
+    );
+  }
+
+  const isShopRoute = pathname.startsWith('/shop');
+
+  const brandNavLinksPromise = getBrandNavLinks();
+  const shopDataPromise: Promise<
+    [ShopCategoryNavItem[], ShopCartNavPreview, HttpTypes.StoreCustomer | null]
+  > = isShopRoute
+    ? Promise.all([
+        listShopCategories(),
+        getShopCartNavPreview(),
+        retrieveLoggedInCustomer(),
+      ])
+    : Promise.resolve([[], emptyShopCartPreview, null]);
+
+  const [brandNavLinks, [shopCategories, cart, customer]] = await Promise.all([
+    brandNavLinksPromise,
+    shopDataPromise,
   ]);
 
   return (
@@ -91,7 +112,6 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         />
       </head>
       <body className="bg-black text-white min-h-screen flex flex-col">
-        <UmamiAnalytics />
         <LayoutSwitcher
           brandNavLinks={brandNavLinks}
           shopCategories={shopCategories}

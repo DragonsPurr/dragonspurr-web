@@ -12,13 +12,13 @@ import {
 } from '@/app/shop/actions';
 import {
   isStripeCheckoutConfigured,
-  StripeCheckoutContext,
   StripeCheckoutProvider,
 } from '@/components/shop/StripeCheckoutProvider';
 import type { HttpTypes } from '@medusajs/types';
 import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import type { Stripe, StripeElements } from '@stripe/stripe-js';
 import { useRouter } from 'next/navigation';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type CheckoutPlaceOrderProps = {
   cart: HttpTypes.StoreCart;
@@ -44,7 +44,7 @@ export function CheckoutPlaceOrder(props: CheckoutPlaceOrderProps) {
   ) {
     return (
       <StripeCheckoutProvider clientSecret={clientSecret}>
-        <CheckoutPlaceOrderBody
+        <StripeCheckoutPlaceOrderBody
           {...props}
           clientSecret={clientSecret}
           onClientSecret={setClientSecret}
@@ -54,10 +54,12 @@ export function CheckoutPlaceOrder(props: CheckoutPlaceOrderProps) {
   }
 
   return (
-    <CheckoutPlaceOrderBody
+    <CheckoutPlaceOrderContent
       {...props}
       clientSecret={clientSecret}
       onClientSecret={setClientSecret}
+      stripe={null}
+      elements={null}
     />
   );
 }
@@ -67,7 +69,25 @@ type BodyProps = CheckoutPlaceOrderProps & {
   onClientSecret: (secret: string | null) => void;
 };
 
-function CheckoutPlaceOrderBody({
+type ContentProps = BodyProps & {
+  stripe: Stripe | null;
+  elements: StripeElements | null;
+};
+
+function StripeCheckoutPlaceOrderBody(props: BodyProps) {
+  const stripe = useStripe();
+  const elements = useElements();
+
+  return (
+    <CheckoutPlaceOrderContent
+      {...props}
+      stripe={stripe}
+      elements={elements}
+    />
+  );
+}
+
+function CheckoutPlaceOrderContent({
   cart,
   paymentProviderId,
   shippingOptionId,
@@ -76,13 +96,13 @@ function CheckoutPlaceOrderBody({
   totalLabel,
   clientSecret,
   onClientSecret,
-}: BodyProps) {
+  stripe,
+  elements,
+}: ContentProps) {
   const router = useRouter();
   const usesStripe = isStripePaymentProvider(paymentProviderId);
   const usesManual = isManualPaymentProvider(paymentProviderId);
-  const stripeReady = useContext(StripeCheckoutContext);
-  const stripe = stripeReady ? useStripe() : null;
-  const elements = stripeReady ? useElements() : null;
+  const stripeReady = stripe != null && elements != null;
 
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [completing, setCompleting] = useState(false);

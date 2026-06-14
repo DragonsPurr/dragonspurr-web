@@ -4,14 +4,11 @@
  * This configuration is used for the Sanity Studio mounted at /studio
  */
 
-import { dashboardTool } from "@sanity/dashboard";
-import { vercelWidget } from "sanity-plugin-dashboard-widget-vercel";
-import { umamiTool } from 'sanity-plugin-umami-analytics-tool'
 import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
 
-import { apiVersion, dataset, projectId } from './sanity/env';
+import { dataset, projectId } from './sanity/env';
 import { schema } from './sanity/schemaTypes';
 import { structure } from './sanity/structure';
 
@@ -23,13 +20,5 @@ export default defineConfig({
   plugins: [
     structureTool({ structure }),
     unsplashImageAsset(),
-    dashboardTool({
-      widgets: [
-        vercelWidget(),
-      ],
-    }),
-    umamiTool({
-      url: 'https://cloud.umami.is/share/BKeEDq4lp27Fe1Uv',
-    }),
   ],
 });

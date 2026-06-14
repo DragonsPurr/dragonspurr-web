@@ -1,4 +1,5 @@
 import type { HttpTypes } from '@medusajs/types';
+import { unstable_cache } from 'next/cache';
 import { formatMedusaError, isMedusaConfigured, sdk } from '@/app/lib/medusa';
 import { getDefaultRegionId } from '@/app/lib/medusa-region';
 
@@ -33,20 +34,27 @@ export type ShopCategoryResult =
 
 export async function listShopCategories(): Promise<ShopCategoryNavItem[]> {
   if (!isMedusaConfigured()) return [];
-
-  try {
-    const { product_categories } = await sdk.store.category.list({
-      limit: 100,
-      fields: 'id,name,handle',
-    });
-
-    return (product_categories ?? [])
-      .sort((a, b) => a.name.localeCompare(b.name))
-      .map((c) => ({ id: c.id, name: c.name, handle: c.handle }));
-  } catch {
-    return [];
-  }
+  return getCachedShopCategories();
 }
+
+const getCachedShopCategories = unstable_cache(
+  async (): Promise<ShopCategoryNavItem[]> => {
+    try {
+      const { product_categories } = await sdk.store.category.list({
+        limit: 100,
+        fields: 'id,name,handle',
+      });
+
+      return (product_categories ?? [])
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((c) => ({ id: c.id, name: c.name, handle: c.handle }));
+    } catch {
+      return [];
+    }
+  },
+  ['shop-categories'],
+  { revalidate: 300 },
+);
 
 export async function retrieveShopCategoryByHandle(handle: string): Promise<ShopCategoryResult> {
   if (!isMedusaConfigured()) {

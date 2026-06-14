@@ -72,7 +72,7 @@ export function Navigation({ brandNavLinks = [], embedded = false }: NavigationP
             </span>
           </Link>
           <div
-            className="pointer-events-none absolute left-0 top-full z-[60] 
+            className="pointer-events-none absolute left-0 top-full z-60 
                        pt-1 opacity-0 invisible transition-opacity 
                        duration-150 group-hover:pointer-events-auto 
                        group-hover:opacity-100 group-hover:visible 
@@ -83,7 +83,7 @@ export function Navigation({ brandNavLinks = [], embedded = false }: NavigationP
             <ul
               role="menu"
               aria-label="Brand links"
-              className="min-w-[12rem] rounded-md border border-red-800 bg-black/95 py-2 shadow-lg md:min-w-[14rem]"
+              className="min-w-48 rounded-md border border-red-800 bg-black/95 py-2 shadow-lg md:min-w-56"
             >
               {brandNavLinks.map((b) => (
                 <li key={b._id} role="none">
@@ -145,7 +145,7 @@ export function Navigation({ brandNavLinks = [], embedded = false }: NavigationP
               aria-label="Open navigation menu"
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen((v) => !v)}
-              className="inline-flex items-center justify-center w-10 h-10 p-0 rounded border border-red-800 hover:bg-red-950/40 focus:outline-none focus:ring-2 focus:ring-red-600 shrink-0"
+              className="inline-flex items-center justify-center w-10 h-10 p-0 rounded-sm border border-red-800 hover:bg-red-950/40 focus:outline-hidden focus:ring-2 focus:ring-red-600 shrink-0"
             >
               <span className="sr-only">Menu</span>
               <span aria-hidden className="flex flex-col justify-between w-6 h-5 leading-none">

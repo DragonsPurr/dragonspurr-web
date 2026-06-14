@@ -194,7 +194,7 @@ export default function Blog() {
                       <button
                         type="button"
                         onClick={() => post.author?.name && setSearchQuery(post.author.name)}
-                        className="flex items-center justify-center gap-3 rounded focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-black text-left hover:opacity-90 transition-opacity"
+                        className="flex items-center justify-center gap-3 rounded-sm focus:outline-hidden focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-black text-left hover:opacity-90 transition-opacity"
                         aria-label={post.author.name ? `View all posts by ${post.author.name}` : undefined}
                       >
                         {post.author.imageUrl && (
@@ -203,7 +203,7 @@ export default function Blog() {
                             alt=""
                             width={48}
                             height={48}
-                            className="rounded-full object-cover w-12 h-12 flex-shrink-0"
+                            className="rounded-full object-cover w-12 h-12 shrink-0"
                           />
                         )}
                         {post.author.name && (
@@ -215,7 +215,7 @@ export default function Blog() {
                     </div>
                   )}
                   {post.image && (
-                    <figure className="w-full max-w-[80%] flex-shrink-0 mb-4">
+                    <figure className="w-full max-w-[80%] shrink-0 mb-4">
                       <Image
                         src={post.image ?? ''}
                         alt={post.imageCaption || post.title || 'Blog image'}
@@ -237,7 +237,7 @@ export default function Blog() {
                     <ul className="flex flex-wrap justify-center gap-2 mt-4" aria-label="Tags">
                       {post.tags.map((tag) => (
                         <li key={tag}>
-                          <span className="text-sm px-2 py-0.5 rounded bg-gray-700/60 text-gray-300">
+                          <span className="text-sm px-2 py-0.5 rounded-sm bg-gray-700/60 text-gray-300">
                             {tag}
                           </span>
                         </li>
@@ -278,7 +278,7 @@ export default function Blog() {
           )}
         </div>
 
-        <aside className="w-full lg:w-72 flex-shrink-0 order-first lg:order-last">
+        <aside className="w-full lg:w-72 shrink-0 order-first lg:order-last">
           <div className="lg:sticky lg:top-28 space-y-4">
             <a
               href="/blog/feed"
