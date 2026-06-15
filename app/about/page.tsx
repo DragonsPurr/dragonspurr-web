@@ -1,8 +1,13 @@
 import { PortableText, type PortableTextComponents } from '@portabletext/react';
 import type { PortableTextBlock } from '@portabletext/types';
 import Image from 'next/image';
+import type { Metadata } from 'next';
 import { getAboutPage } from '@/app/lib/about';
 import { isSanityConfigured, urlFor } from '@/app/lib/sanity';
+
+export const metadata: Metadata = {
+  title: 'About',
+};
 
 const aboutPortableTextComponents: PortableTextComponents = {
   marks: {

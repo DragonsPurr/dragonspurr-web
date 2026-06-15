@@ -9,6 +9,8 @@ import { getRequestPathname } from './lib/request-pathname';
 import { listShopCategories, type ShopCategoryNavItem } from './lib/shop';
 import type { HttpTypes } from '@medusajs/types';
 import { logoTypes, siteInfo } from './lib/constants';
+import type { Metadata } from 'next';
+import Script from 'next/script';
 import {
   Cinzel_Decorative,
   Cinzel,
@@ -38,15 +40,28 @@ export const viewport = {
   themeColor: '#000000',
 };
 
-export const metadata = {
-  title: siteInfo.name,
+export const metadata: Metadata = {
+  metadataBase: new URL(siteInfo.url),
+  title: {
+    default: siteInfo.name,
+    template: `%s | ${siteInfo.name}`,
+  },
   description: siteInfo.description,
   openGraph: {
-    url: siteInfo.url,
+    type: 'website',
+    siteName: siteInfo.name,
+    title: siteInfo.name,
+    description: siteInfo.description,
+    images: [
+      { 
+        url: logoTypes.square_for_dark_bkgds,
+        alt: siteInfo.name,
+      }
+    ],
   },
   icons: {
-    icon: logoTypes.square_for_dark_bkgds,
-    apple: logoTypes.square_for_dark_bkgds,
+    icon: logoTypes.favicon,
+    apple: logoTypes.favicon,
   },
 };
 
@@ -100,18 +115,14 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         } as CSSProperties
       }
     >
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              window.gtag = gtag;
-            `,
-          }}
-        />
-      </head>
       <body className="bg-black text-white min-h-screen flex flex-col">
+        <Script id="gtag-init" strategy="beforeInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            window.gtag = gtag;
+          `}
+        </Script>
         <LayoutSwitcher
           brandNavLinks={brandNavLinks}
           shopCategories={shopCategories}

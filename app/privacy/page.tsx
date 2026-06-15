@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 import { siteInfo } from '@/app/lib/constants';
 
 export const metadata: Metadata = {
-  title: `Privacy Policy | ${siteInfo.name}`,
+  title: 'Privacy Policy',
   description: `How ${siteInfo.name} collects, uses, and protects personal information on this website and shop.`,
 };
 

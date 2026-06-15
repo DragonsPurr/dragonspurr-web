@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 const baseUrl = siteInfo.url.replace(/\/$/, '');
 
 export const metadata = {
+  title: 'Blog',
   alternates: {
     types: {
       'application/rss+xml': `${baseUrl}/blog/feed`,

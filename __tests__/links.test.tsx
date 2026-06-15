@@ -8,8 +8,6 @@ import Portfolio from '@/app/portfolio/page';
 import Contact from '@/app/contact/page';
 import NotFound from '@/app/not-found';
 
-jest.mock('sweetalert2', () => ({ __esModule: true, default: { fire: jest.fn() } }));
-
 jest.mock('@/app/lib/about', () => ({
   getAboutPage: jest.fn(),
 }));

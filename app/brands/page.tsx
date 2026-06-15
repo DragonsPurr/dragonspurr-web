@@ -1,7 +1,12 @@
 import { PortableText } from '@portabletext/react';
 import Image from 'next/image';
+import type { Metadata } from 'next';
 import { getBrands } from '@/app/lib/brands';
 import { isSanityConfigured, urlFor } from '@/app/lib/sanity';
+
+export const metadata: Metadata = {
+  title: 'Brands',
+};
 
 export default async function Brands() {
   const brands = await getBrands();
